@@ -5,16 +5,18 @@ import hu.eszter.bokkon.model.participants.Dice;
 import hu.eszter.bokkon.model.participants.Farmer;
 import hu.eszter.bokkon.service.Initializer;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Main {
 
     public static void main (String[] args) {
 
         Initializer initializer = new Initializer();
-        AnimalStock animals = initializer.createAnimalStock();
+        AnimalStock allAnimals = initializer.createAnimalStock();
         Dice dice1 = initializer.createDice("sheep", "cow", "wolf");
         Dice dice2 = initializer.createDice("pig", "horse", "fox");
-        Farmer farmer1 = new Farmer("Jen");
-        Farmer farmer2 = new Farmer("Bob");
-        Game newGame = new Game(animals, dice1, dice2, farmer1, farmer2);
+        List<Farmer> farmers = Arrays.asList(new Farmer("Jen"), new Farmer("Bob"));
+        Game newGame = new Game(allAnimals, dice1, dice2, farmers);
     }
 }
