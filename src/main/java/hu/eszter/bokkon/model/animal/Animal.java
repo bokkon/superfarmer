@@ -4,6 +4,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Animal {
 
+    protected String name;
+
     private static final AtomicInteger count = new AtomicInteger(0);
     protected final int id;
 
@@ -15,4 +17,7 @@ public abstract class Animal {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
 }
