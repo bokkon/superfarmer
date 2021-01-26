@@ -38,7 +38,7 @@ public class Game {
 
     private void doRound() {
         for (Farmer actFarmer: farmers) {
-            actFarmer.checkChangePossibilities();
+            provideChangePossibilities(actFarmer);
             actFarmer.change();
             if (checkWin(actFarmer)){
                 thereIsAWinner = true;
@@ -49,19 +49,27 @@ public class Game {
             printDiceResult(result1);
             String result2 = actFarmer.rollDice(dice2);
             printDiceResult(result2);
-            actFarmer.evaluateDiceResult(result1, result2);
+            evaluateDiceResult(result1, result2);
+            if (checkWin(actFarmer)){
+                thereIsAWinner = true;
+                System.out.println("Congratulations! " + actFarmer.getName() + " you win!");
+                System.exit(0);
+            }
         }
     }
 
+    //TODO
+    private void provideChangePossibilities(Farmer act) {
+        List<Animal> changeable = new ArrayList<>();
+    }
+
+    //TODO
+    private void evaluateDiceResult(String result1, String result2) {
+    }
+
     private boolean checkWin(Farmer actFarmer) {
-        List<Animal> farmerAnimals = actFarmer.getFarmerLiveStock();
-        Set<String> animals = new HashSet<>();
-        for (Animal actAnimal: farmerAnimals) {
-            animals.add(actAnimal.getClass().getSimpleName());
-        }
-        return animals.contains("Rabbit")
-                && animals.contains("Sheep") && animals.contains("Pig")
-                && animals.contains("Cow") && animals.contains("Horse");
+        Map<String, Integer> farmerAnimals = actFarmer.getFarmerLiveStock();
+        return farmerAnimals.size() >= 5;
     }
 
     private void printDiceResult(String result) {
