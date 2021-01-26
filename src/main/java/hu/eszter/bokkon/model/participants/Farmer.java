@@ -2,15 +2,15 @@ package hu.eszter.bokkon.model.participants;
 
 import hu.eszter.bokkon.model.animal.Animal;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Farmer implements MoveAnimal {
 
     private final String name;
     private final Random random = new Random();
-    private List<Animal> farmerLiveStock = new ArrayList<>();
+    private Map<String, Integer> farmerLiveStock = new HashMap<>();
+    private Integer numberOfSmallDogs = 0;
+    private Integer numberOfBigDogs = 0;
 
     public Farmer(String name) {
         this.name = name;
@@ -20,32 +20,61 @@ public class Farmer implements MoveAnimal {
         return name;
     }
 
-    public List<Animal> getFarmerLiveStock() {
+    public Map<String, Integer> getFarmerLiveStock() {
         return farmerLiveStock;
     }
 
     @Override
-    public void addAnimal(Animal newAnimal) {
-        farmerLiveStock.add(newAnimal);
+    public void addAnimal(Animal animal) {
+        String name = animal.getClass().getSimpleName();
+        farmerLiveStock.putIfAbsent(name, 0);
+        farmerLiveStock.put(name, farmerLiveStock.get(name) + 1);
     }
 
     @Override
-    public void addAnimals(List<Animal> newAnimals) {
-        farmerLiveStock.addAll(newAnimals);
+    public void addAnimals(List<Animal> animals) {
+        String name = animals.get(0).getClass().getSimpleName();
+        farmerLiveStock.putIfAbsent(name, 0);
+        farmerLiveStock.put(name, farmerLiveStock.get(name) + animals.size());
     }
 
     @Override
     public void removeAnimal(Animal animal) {
-        farmerLiveStock.remove(animal);
+        String name = animal.getClass().getSimpleName();
+        if (farmerLiveStock.get(name) >= 0) {
+            farmerLiveStock.replace(name, farmerLiveStock.get(name) - 1);
+        }
+        if (farmerLiveStock.get(name) == 0) {
+            farmerLiveStock.remove(name);
+        }
     }
 
     @Override
     public void removeAnimals(List<Animal> animals) {
-        farmerLiveStock.removeAll(animals);
+        String name = animals.get(0).getClass().getSimpleName();
+        if (farmerLiveStock.get(name) >= animals.size()) {
+            farmerLiveStock.replace(name, farmerLiveStock.get(name) - animals.size());
+        }
+        if (farmerLiveStock.get(name) == 0) {
+            farmerLiveStock.remove(name);
+        }
     }
 
-    //TODO
-    public void checkChangePossibilities() { }
+    public Integer getNumberOfSmallDogs() {
+        return numberOfSmallDogs;
+    }
+
+    public void setNumberOfSmallDogs(Integer numberOfSmallDogs) {
+        this.numberOfSmallDogs = numberOfSmallDogs;
+    }
+
+    public Integer getNumberOfBigDogs() {
+        return numberOfBigDogs;
+    }
+
+    public void setNumberOfBigDogs(Integer numberOfBigDogs) {
+        this.numberOfBigDogs = numberOfBigDogs;
+    }
 
     //TODO
     public void change() {}
@@ -55,7 +84,4 @@ public class Farmer implements MoveAnimal {
         return dice.getDiceSides().get(randomNo);
     }
 
-    //TODO
-    public void evaluateDiceResult(String result1, String result2) {
-    }
 }

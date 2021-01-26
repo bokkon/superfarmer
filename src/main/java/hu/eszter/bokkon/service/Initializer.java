@@ -1,31 +1,28 @@
 package hu.eszter.bokkon.service;
 
-import hu.eszter.bokkon.model.animal.*;
 import hu.eszter.bokkon.model.participants.AnimalStock;
 import hu.eszter.bokkon.model.participants.Dice;
 import hu.eszter.bokkon.model.participants.ExchangeTable;
 import hu.eszter.bokkon.model.participants.Farmer;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Initializer {
 
     public AnimalStock createAnimalStock() {
-        List<Animal> animals = createFarmAnimals();
-        return new AnimalStock(animals);
+        Map<String, Integer> animals = createFarmAnimals();
+        return new AnimalStock();
     }
 
-    private List<Animal> createFarmAnimals() {
-        List<Animal> animals = new LinkedList<>();
-        animals.addAll(Stream.generate(Rabbit::new).limit(60).collect(Collectors.toList()));
-        animals.addAll(Stream.generate(Sheep::new).limit(24).collect(Collectors.toList()));
-        animals.addAll(Stream.generate(Pig::new).limit(20).collect(Collectors.toList()));
-        animals.addAll(Stream.generate(Cow::new).limit(12).collect(Collectors.toList()));
-        animals.addAll(Stream.generate(Horse::new).limit(6).collect(Collectors.toList()));
-        animals.addAll(Stream.generate(SmallDog::new).limit(4).collect(Collectors.toList()));
-        animals.addAll(Stream.generate(BigDog::new).limit(2).collect(Collectors.toList()));
+    private Map<String, Integer> createFarmAnimals() {
+        Map<String, Integer> animals = new HashMap<>();
+        animals.put("Rabbit", 60);
+        animals.put("Sheep", 24);
+        animals.put("Pig", 20);
+        animals.put("Cow", 12);
+        animals.put("Horse", 6);
+        animals.put("SmallDog", 4);
+        animals.put("BigDog", 2);
         return animals;
     }
 
