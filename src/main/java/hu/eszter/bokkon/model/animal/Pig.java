@@ -1,4 +1,4 @@
 package hu.eszter.bokkon.model.animal;
 
-public class Pig extends Animal {
+public class Pig implements Animal {
 }

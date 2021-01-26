@@ -2,12 +2,13 @@ package hu.eszter.bokkon.model.player;
 
 import hu.eszter.bokkon.model.animal.Animal;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
 
     private final String name;
-    private Set<Animal> playerAnimals;
+    private List<Animal> playerAnimals = new ArrayList<>();
 
     public Player(String name) {
         this.name = name;
@@ -17,7 +18,7 @@ public class Player {
         return name;
     }
 
-    public Set<Animal> getPlayerAnimals() {
+    public List<Animal> getPlayerAnimals() {
         return playerAnimals;
     }
 
@@ -25,7 +26,7 @@ public class Player {
         playerAnimals.add(newAnimal);
     }
 
-    public void addAnimals(Set<Animal> newAnimals) {
+    public void addAnimals(List<Animal> newAnimals) {
         playerAnimals.addAll(newAnimals);
     }
 
