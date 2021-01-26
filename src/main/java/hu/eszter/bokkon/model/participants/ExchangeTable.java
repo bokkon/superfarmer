@@ -10,37 +10,62 @@ import java.util.stream.Stream;
 
 public class ExchangeTable {
 
-    private final Map<String, List<Animal>> exchanges1 = new HashMap<>();
-    private final Map<String, Animal> exchanges2 = new HashMap<>();
+    private final Map<String, String> exchanges = new HashMap<>();
+    private final Map<String, List<Animal>> exchangesHelp1 = new HashMap<>();
+    private final Map<String, Animal> exchangesHelp2 = new HashMap<>();
 
     public ExchangeTable() {
-        fillExchanges1();
-        fillExchanges2();
+        fillExchanges();
+        fillExchangesHelp1();
+        fillExchangesHelp2();
     }
 
-    private void fillExchanges1() {
+    private void fillExchanges() {
+        exchanges.put("Sheep", "Rabbit6,SmallDog");
+        exchanges.put("Cow", "Pig3,BigDog");
+        exchanges.put("Pig", "Sheep2");
+        exchanges.put("Horse", "Cow2");
+        exchanges.put("SmallDog", "Sheep");
+        exchanges.put("BigDog", "Cow");
+
+        exchanges.put("Rabbit6", "Sheep");
+        exchanges.put("Sheep2", "Pig");
+        exchanges.put("Pig3", "Cow");
+        exchanges.put("Cow2", "Horse");
+    }
+
+    private void fillExchangesHelp1() {
         List<Animal> act = Stream.generate(Rabbit::new).limit(6).collect(Collectors.toList());
-        exchanges1.put("Sheep", act);
+        exchangesHelp1.put("Rabbit6", act);
         act.clear();
         act = Stream.generate(Sheep::new).limit(2).collect(Collectors.toList());
-        exchanges1.put("Pig", act);
+        exchangesHelp1.put("Sheep2", act);
         act.clear();
         act = Stream.generate(Pig::new).limit(3).collect(Collectors.toList());
-        exchanges1.put("Cow", act);
+        exchangesHelp1.put("Pig3", act);
         act.clear();
         act = Stream.generate(Cow::new).limit(2).collect(Collectors.toList());
-        exchanges1.put("Horse", act);
+        exchangesHelp1.put("Cow2", act);
     }
 
-    private void fillExchanges2() {
-        exchanges2.put("SmallDog", new Sheep());
-        exchanges2.put("BigDog", new Cow());
-        exchanges2.put("Sheep", new SmallDog());
-        exchanges2.put("Cow", new BigDog());
-        exchanges2.put("Rabbit6", new Sheep());
-        exchanges2.put("Sheep2", new Pig());
-        exchanges2.put("Pig3", new Cow());
-        exchanges2.put("Cow2", new Horse());
+    private void fillExchangesHelp2() {
+        exchangesHelp2.put("Sheep", new Sheep());
+        exchangesHelp2.put("Pig", new Pig());
+        exchangesHelp2.put("Cow", new Cow());
+        exchangesHelp2.put("Horse", new Horse());
+        exchangesHelp2.put("SmallDog", new SmallDog());
+        exchangesHelp2.put("BigDog", new BigDog());
     }
 
+    public Map<String, String> getExchanges() {
+        return exchanges;
+    }
+
+    public Map<String, List<Animal>> getExchangesHelp1() {
+        return exchangesHelp1;
+    }
+
+    public Map<String, Animal> getExchangesHelp2() {
+        return exchangesHelp2;
+    }
 }
