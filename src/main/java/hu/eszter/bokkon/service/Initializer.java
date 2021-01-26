@@ -3,6 +3,7 @@ package hu.eszter.bokkon.service;
 import hu.eszter.bokkon.model.animal.*;
 import hu.eszter.bokkon.model.participants.AnimalStock;
 import hu.eszter.bokkon.model.participants.Dice;
+import hu.eszter.bokkon.model.participants.ExchangeTable;
 import hu.eszter.bokkon.model.participants.Farmer;
 
 import java.util.*;
@@ -35,6 +36,10 @@ public class Initializer {
         diceSides.add("Pig");
         diceSides.addAll(Arrays.asList(a1, a2, a3));
         return new Dice(diceSides);
+    }
+
+    public ExchangeTable createExchangeTable(){
+        return new ExchangeTable();
     }
 
     public Farmer createPlayer(String name) {

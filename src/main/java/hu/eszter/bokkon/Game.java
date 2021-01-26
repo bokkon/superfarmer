@@ -3,26 +3,31 @@ package hu.eszter.bokkon;
 import hu.eszter.bokkon.model.animal.Animal;
 import hu.eszter.bokkon.model.participants.AnimalStock;
 import hu.eszter.bokkon.model.participants.Dice;
+import hu.eszter.bokkon.model.participants.ExchangeTable;
 import hu.eszter.bokkon.model.participants.Farmer;
+import hu.eszter.bokkon.service.Initializer;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Game {
 
     private AnimalStock animalStock;
     private final Dice dice1;
     private final Dice dice2;
-    private List<Farmer> farmers;
-    private boolean thereIsAWinner;
+    private final ExchangeTable exchangeTable;
+    private List<Farmer> farmers = new ArrayList<>();
+    private boolean thereIsAWinner = false;
+    Initializer initializer = new Initializer();
 
-    public Game(AnimalStock animalStock, Dice dice1, Dice dice2, List<Farmer> farmers) {
-        this.animalStock = animalStock;
-        this.dice1 = dice1;
-        this.dice2 = dice2;
-        this.farmers = farmers;
-        thereIsAWinner = false;
+    public Game() {
+        this.dice1 = initializer.createDice("Sheep", "Cow", "Wolf");
+        this.dice2 = initializer.createDice("Pig", "Horse", "Fox");
+        this.exchangeTable = initializer.createExchangeTable();
+        this.animalStock = initializer.createAnimalStock();
+    }
+
+    public void init() {
+        this.farmers = Arrays.asList(initializer.createPlayer("Jen"), initializer.createPlayer("Bob"));
     }
 
     public void run() {
