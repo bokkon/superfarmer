@@ -1,6 +1,6 @@
 package hu.eszter.bokkon.model.animal;
 
-public interface ProtectorAnimal {
+public interface ProtectorAnimal extends Animal{
 
     void protect();
 
