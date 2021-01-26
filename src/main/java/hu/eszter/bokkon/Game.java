@@ -39,7 +39,7 @@ public class Game {
                 thereIsAWinner = true;
                 System.out.println("Congratulations! " + actFarmer.getName() + " you win!");
                 System.exit(0);
-            };
+            }
             String result1 = actFarmer.rollDice(dice1);
             printDiceResult(result1);
             String result2 = actFarmer.rollDice(dice2);
@@ -50,13 +50,13 @@ public class Game {
 
     private boolean checkWin(Farmer actFarmer) {
         List<Animal> farmerAnimals = actFarmer.getFarmerAnimals();
-        Set<String> animalNames = new HashSet<>();
+        Set<String> animals = new HashSet<>();
         for (Animal actAnimal: farmerAnimals) {
-            animalNames.add(actAnimal.getName());
+            animals.add(actAnimal.getClass().getSimpleName());
         }
-        return animalNames.contains("rabbit")
-                && animalNames.contains("sheep") && animalNames.contains("pig")
-                && animalNames.contains("cow") && animalNames.contains("horse");
+        return animals.contains("Rabbit")
+                && animals.contains("Sheep") && animals.contains("Pig")
+                && animals.contains("Cow") && animals.contains("Horse");
     }
 
     private void printDiceResult(String result) {

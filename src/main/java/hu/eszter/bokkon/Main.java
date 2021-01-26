@@ -14,8 +14,8 @@ public class Main {
 
         Initializer initializer = new Initializer();
         AnimalStock allAnimals = initializer.createAnimalStock();
-        Dice dice1 = initializer.createDice("sheep", "cow", "wolf");
-        Dice dice2 = initializer.createDice("pig", "horse", "fox");
+        Dice dice1 = initializer.createDice("Sheep", "Cow", "Wolf");
+        Dice dice2 = initializer.createDice("Pig", "Horse", "Fox");
         List<Farmer> farmers = Arrays.asList(new Farmer("Jen"), new Farmer("Bob"));
         Game newGame = new Game(allAnimals, dice1, dice2, farmers);
     }
