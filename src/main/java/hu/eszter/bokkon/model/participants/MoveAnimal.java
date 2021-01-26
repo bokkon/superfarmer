@@ -4,9 +4,13 @@ import hu.eszter.bokkon.model.animal.Animal;
 
 import java.util.List;
 
-public interface CollectAnimal {
+public interface MoveAnimal {
 
     void addAnimal(Animal newAnimal);
 
     void addAnimals(List<Animal> newAnimals);
+
+    void removeAnimal(Animal newAnimal);
+
+    void removeAnimals(List<Animal> newAnimals);
 }

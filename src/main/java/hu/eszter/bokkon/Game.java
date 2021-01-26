@@ -26,7 +26,7 @@ public class Game {
     }
 
     public void run() {
-        while(!animalStock.getAnimals().isEmpty() || !thereIsAWinner) {
+        while(!animalStock.getLiveStock().isEmpty() || !thereIsAWinner) {
             doRound();
         }
     }
@@ -49,7 +49,7 @@ public class Game {
     }
 
     private boolean checkWin(Farmer actFarmer) {
-        List<Animal> farmerAnimals = actFarmer.getFarmerAnimals();
+        List<Animal> farmerAnimals = actFarmer.getFarmerLiveStock();
         Set<String> animals = new HashSet<>();
         for (Animal actAnimal: farmerAnimals) {
             animals.add(actAnimal.getClass().getSimpleName());

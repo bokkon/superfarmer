@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Farmer implements CollectAnimal{
+public class Farmer implements MoveAnimal {
 
     private final String name;
     private final Random random = new Random();
-    private List<Animal> farmerAnimals = new ArrayList<>();
+    private List<Animal> farmerLiveStock = new ArrayList<>();
 
     public Farmer(String name) {
         this.name = name;
@@ -20,18 +20,28 @@ public class Farmer implements CollectAnimal{
         return name;
     }
 
-    public List<Animal> getFarmerAnimals() {
-        return farmerAnimals;
+    public List<Animal> getFarmerLiveStock() {
+        return farmerLiveStock;
     }
 
     @Override
     public void addAnimal(Animal newAnimal) {
-        farmerAnimals.add(newAnimal);
+        farmerLiveStock.add(newAnimal);
     }
 
     @Override
     public void addAnimals(List<Animal> newAnimals) {
-        farmerAnimals.addAll(newAnimals);
+        farmerLiveStock.addAll(newAnimals);
+    }
+
+    @Override
+    public void removeAnimal(Animal animal) {
+        farmerLiveStock.remove(animal);
+    }
+
+    @Override
+    public void removeAnimals(List<Animal> animals) {
+        farmerLiveStock.removeAll(animals);
     }
 
     //TODO
