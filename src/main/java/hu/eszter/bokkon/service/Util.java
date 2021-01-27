@@ -15,13 +15,21 @@ public class Util {
     }
 
     public void printMapStr(Map<String, String> map) {
-        for (String key : map.keySet()) {
-            String value = map.get(key);
-            System.out.println( (key.contains(" ") && !key.contains("Sheep") ? key + "s" : key)
-                    + String.join("", Collections.nCopies(12 - key.length(), " "))
-                    + ": "
-                    + (value.contains(" ") && !value.contains("Sheep") ? value + "s" :value));
+        if (map.isEmpty()) {
+            System.out.println("Change is not available!");
         }
+        for (String key : map.keySet()) {
+            String[] values = map.get(key).split(",");
+            System.out.println( (needsPlural(key) ? key + "s" : key)
+                    + " for:"
+                    + String.join("", Collections.nCopies((needsPlural(key) ? 15 : 16) - key.length(), " "))
+                    + (needsPlural(values[0]) ? values[0] + "s" :values[0])
+                    + (values.length > 1 ? " or " + (needsPlural(values[1]) ? values[1] + "s" :values[1]) : " "));
+        }
+    }
+
+    private boolean needsPlural(String word) {
+        return word.contains(" ") && !word.contains("Sheep");
     }
 
 }

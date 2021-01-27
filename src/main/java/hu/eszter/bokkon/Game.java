@@ -66,11 +66,11 @@ public class Game {
         }
     }
 
+    //TODO implement check animalStock availability
     private Map<String, String> getPossibleChanges(Farmer act) {
         Map<String, String> possibleChanges = new HashMap<>();
         Map<String, Integer> farmerLiveStock = act.getFarmerLiveStock();
         if (farmerLiveStock.isEmpty()) {
-            possibleChanges.put("No changes available for you ", act.getName() + "!");
             return possibleChanges;
         }
         Map<String, String> exchangeRules = this.exchangeTable.getExchanges();
@@ -80,7 +80,7 @@ public class Game {
             }
             if (key.charAt(1) == ' ') {
                 String[] temp = key.split(" ");
-                if (farmerLiveStock.containsKey(temp[1]) && farmerLiveStock.get(key) >= Integer.parseInt(temp[0])) {
+                if (farmerLiveStock.containsKey(temp[1]) && farmerLiveStock.get(temp[1]) >= Integer.parseInt(temp[0])) {
                     possibleChanges.put(key, exchangeRules.get(key));
                 }
             }
