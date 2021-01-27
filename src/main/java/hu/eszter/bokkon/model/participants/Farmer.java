@@ -9,8 +9,6 @@ public class Farmer implements MoveAnimal {
     private final String name;
     private final Random random = new Random();
     private Map<String, Integer> farmerLiveStock = new HashMap<>();
-    private Integer numberOfSmallDogs = 0;
-    private Integer numberOfBigDogs = 0;
 
     public Farmer(String name) {
         this.name = name;
@@ -60,24 +58,8 @@ public class Farmer implements MoveAnimal {
         }
     }
 
-    public Integer getNumberOfSmallDogs() {
-        return numberOfSmallDogs;
-    }
-
-    public void setNumberOfSmallDogs(Integer numberOfSmallDogs) {
-        this.numberOfSmallDogs = numberOfSmallDogs;
-    }
-
-    public Integer getNumberOfBigDogs() {
-        return numberOfBigDogs;
-    }
-
-    public void setNumberOfBigDogs(Integer numberOfBigDogs) {
-        this.numberOfBigDogs = numberOfBigDogs;
-    }
-
     //TODO
-    public void change() {}
+    public void change(Map<String, String> actPossibleChanges) {}
 
     public String rollDice(Dice dice) {
         int randomNo = random.nextInt(12);
