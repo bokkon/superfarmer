@@ -25,6 +25,14 @@ public class Game {
         this.animalStock = initializer.createAnimalStock();
     }
 
+    public List<Farmer> getFarmers() {
+        return farmers;
+    }
+
+    public AnimalStock getAnimalStock() {
+        return animalStock;
+    }
+
     public void init() {
         this.farmers = Arrays.asList(initializer.createPlayer("Jen"), initializer.createPlayer("Bob"));
     }

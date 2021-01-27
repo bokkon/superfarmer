@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface MoveAnimal {
 
-    void addAnimal(Animal newAnimal);
+    void addAnimal(String newAnimal);
 
-    void addAnimals(List<Animal> newAnimals);
+    void addAnimals(List<String> newAnimals);
 
-    void removeAnimal(Animal newAnimal);
+    void removeAnimal(String newAnimal);
 
-    void removeAnimals(List<Animal> newAnimals);
+    void removeAnimals(List<String> newAnimals);
 }

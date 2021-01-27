@@ -10,20 +10,7 @@ import java.util.*;
 public class Initializer {
 
     public AnimalStock createAnimalStock() {
-        Map<String, Integer> animals = createFarmAnimals();
         return new AnimalStock();
-    }
-
-    private Map<String, Integer> createFarmAnimals() {
-        Map<String, Integer> animals = new HashMap<>();
-        animals.put("Rabbit", 60);
-        animals.put("Sheep", 24);
-        animals.put("Pig", 20);
-        animals.put("Cow", 12);
-        animals.put("Horse", 6);
-        animals.put("SmallDog", 4);
-        animals.put("BigDog", 2);
-        return animals;
     }
 
     public Dice createDice(String a1, String a2, String a3) {

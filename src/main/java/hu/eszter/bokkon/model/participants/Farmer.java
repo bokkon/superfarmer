@@ -23,38 +23,32 @@ public class Farmer implements MoveAnimal {
     }
 
     @Override
-    public void addAnimal(Animal animal) {
-        String name = animal.getClass().getSimpleName();
-        farmerLiveStock.putIfAbsent(name, 0);
-        farmerLiveStock.put(name, farmerLiveStock.get(name) + 1);
+    public void addAnimal(String animal) {
+        farmerLiveStock.putIfAbsent(animal, 0);
+        farmerLiveStock.put(animal, farmerLiveStock.get(animal) + 1);
     }
 
     @Override
-    public void addAnimals(List<Animal> animals) {
-        String name = animals.get(0).getClass().getSimpleName();
-        farmerLiveStock.putIfAbsent(name, 0);
-        farmerLiveStock.put(name, farmerLiveStock.get(name) + animals.size());
-    }
-
-    @Override
-    public void removeAnimal(Animal animal) {
-        String name = animal.getClass().getSimpleName();
-        if (farmerLiveStock.get(name) >= 0) {
-            farmerLiveStock.replace(name, farmerLiveStock.get(name) - 1);
-        }
-        if (farmerLiveStock.get(name) == 0) {
-            farmerLiveStock.remove(name);
+    public void addAnimals(List<String> animals) {
+        for (String actAnimal: animals) {
+            addAnimal(actAnimal);
         }
     }
 
     @Override
-    public void removeAnimals(List<Animal> animals) {
-        String name = animals.get(0).getClass().getSimpleName();
-        if (farmerLiveStock.get(name) >= animals.size()) {
-            farmerLiveStock.replace(name, farmerLiveStock.get(name) - animals.size());
+    public void removeAnimal(String animal) {
+        if (farmerLiveStock.get(animal) > 0) {
+            farmerLiveStock.put(animal, farmerLiveStock.get(animal) - 1);
         }
-        if (farmerLiveStock.get(name) == 0) {
-            farmerLiveStock.remove(name);
+        if (farmerLiveStock.get(animal) == 0) {
+            farmerLiveStock.remove(animal);
+        }
+    }
+
+    @Override
+    public void removeAnimals(List<String> animals) {
+        for (String actAnimal: animals) {
+            removeAnimal(actAnimal);
         }
     }
 

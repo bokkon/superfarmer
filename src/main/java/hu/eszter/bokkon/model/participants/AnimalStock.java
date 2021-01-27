@@ -13,37 +13,50 @@ public class AnimalStock implements MoveAnimal {
 
     public AnimalStock() {
         animalCount = 128;
+        liveStock.put("Rabbit", 60);
+        liveStock.put("Sheep", 24);
+        liveStock.put("Pig", 20);
+        liveStock.put("Cow", 12);
+        liveStock.put("Horse", 6);
+        liveStock.put("SmallDog", 4);
+        liveStock.put("BigDog", 2);
     }
 
     public Map<String, Integer> getLiveStock() {
         return liveStock;
     }
 
-    @Override
-    public void addAnimal(Animal animal) {
-        String name = animal.getClass().getSimpleName();
-        liveStock.put(name, liveStock.get(name) + 1);
+    public Integer getAnimalCount() {
+        return animalCount;
+    }
+
+    public void setAnimalCount(Integer animalCount) {
+        this.animalCount = animalCount;
     }
 
     @Override
-    public void addAnimals(List<Animal> animals) {
-        String name = animals.get(0).getClass().getSimpleName();
-        liveStock.put(name, liveStock.get(name) + animals.size());
+    public void addAnimal(String animal) {
+        liveStock.put(animal, liveStock.get(animal) + 1);
     }
 
     @Override
-    public void removeAnimal(Animal animal) {
-        String name = animal.getClass().getSimpleName();
-        if (liveStock.get(name) >= 0) {
-            liveStock.replace(name, liveStock.get(name) - 1);
+    public void addAnimals(List<String> animals) {
+        for (String actAnimal: animals) {
+            addAnimal(actAnimal);
         }
     }
 
     @Override
-    public void removeAnimals(List<Animal> animals) {
-        String name = animals.get(0).getClass().getSimpleName();
-        if (liveStock.get(name) >= animals.size()) {
-            liveStock.replace(name, liveStock.get(name) - animals.size());
+    public void removeAnimal(String animal) {
+        if (liveStock.get(animal) > 0) {
+            liveStock.put(animal, liveStock.get(animal) - 1);
+        }
+    }
+
+    @Override
+    public void removeAnimals(List<String> animals) {
+        for (String actAnimal: animals) {
+            removeAnimal(actAnimal);
         }
     }
 }
