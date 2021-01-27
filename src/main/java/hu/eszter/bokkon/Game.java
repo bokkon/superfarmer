@@ -1,6 +1,5 @@
 package hu.eszter.bokkon;
 
-import hu.eszter.bokkon.model.animal.Animal;
 import hu.eszter.bokkon.model.participants.AnimalStock;
 import hu.eszter.bokkon.model.participants.Dice;
 import hu.eszter.bokkon.model.participants.ExchangeTable;
@@ -36,10 +35,11 @@ public class Game {
         }
     }
 
+    //TODO
     private void doRound() {
         for (Farmer actFarmer: farmers) {
-            provideChangePossibilities(actFarmer);
-            actFarmer.change();
+            Map<String, String> actPossibleChanges = getPossibleChanges(actFarmer);
+            actFarmer.change(actPossibleChanges);
             if (checkWin(actFarmer)){
                 thereIsAWinner = true;
                 System.out.println("Congratulations! " + actFarmer.getName() + " you win!");
@@ -58,9 +58,26 @@ public class Game {
         }
     }
 
-    //TODO
-    private void provideChangePossibilities(Farmer act) {
-        List<Animal> changeable = new ArrayList<>();
+    private Map<String, String> getPossibleChanges(Farmer act) {
+        Map<String, String> possibleChanges = new HashMap<>();
+        Map<String, Integer> farmerLiveStock = act.getFarmerLiveStock();
+        if (farmerLiveStock.isEmpty()) {
+            possibleChanges.put("No changes available for you ", act.getName() + "!");
+            return possibleChanges;
+        }
+        Map<String, String> exchangeRules = this.exchangeTable.getExchanges();
+        for (String key : exchangeRules.keySet()) {
+            if (farmerLiveStock.containsKey(key)) {
+                possibleChanges.put(key, exchangeRules.get(key));
+            }
+            if (key.charAt(1) == ' ') {
+                String[] temp = key.split(" ");
+                if (farmerLiveStock.containsKey(temp[1]) && farmerLiveStock.get(key) >= Integer.parseInt(temp[0])) {
+                    possibleChanges.put(key, exchangeRules.get(key));
+                }
+            }
+        }
+        return possibleChanges;
     }
 
     //TODO
@@ -69,7 +86,8 @@ public class Game {
 
     private boolean checkWin(Farmer actFarmer) {
         Map<String, Integer> farmerAnimals = actFarmer.getFarmerLiveStock();
-        return farmerAnimals.size() >= 5;
+        int animalCounter = (int) farmerAnimals.keySet().stream().filter(key -> !key.equals("SmallDog") && !key.equals("BigDog")).count();
+        return animalCounter == 5;
     }
 
     private void printDiceResult(String result) {
