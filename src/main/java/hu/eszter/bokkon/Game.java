@@ -34,7 +34,7 @@ public class Game {
     }
 
     public void init() {
-        this.farmers = Arrays.asList(initializer.createPlayer("Jen"), initializer.createPlayer("Bob"));
+        this.farmers.addAll(Arrays.asList(initializer.createPlayer("Jen"), initializer.createPlayer("Bob")));
     }
 
     public void run() {
@@ -66,7 +66,6 @@ public class Game {
         }
     }
 
-    //TODO implement check animalStock availability
     private Map<String, String> getPossibleChanges(Farmer act) {
         Map<String, String> possibleChanges = new HashMap<>();
         Map<String, Integer> farmerLiveStock = act.getFarmerLiveStock();
@@ -75,17 +74,31 @@ public class Game {
         }
         Map<String, String> exchangeRules = this.exchangeTable.getExchanges();
         for (String key : exchangeRules.keySet()) {
+            String value = exchangeRules.get(key);
             if (farmerLiveStock.containsKey(key)) {
-                possibleChanges.put(key, exchangeRules.get(key));
+                possibleChanges.put(key, value);
             }
             if (key.charAt(1) == ' ') {
                 String[] temp = key.split(" ");
                 if (farmerLiveStock.containsKey(temp[1]) && farmerLiveStock.get(temp[1]) >= Integer.parseInt(temp[0])) {
-                    possibleChanges.put(key, exchangeRules.get(key));
+                    possibleChanges.put(key, value);
                 }
             }
         }
         return possibleChanges;
+    }
+
+    //TODO
+    private Map<String, String> changeIsAvailable(Map<String, String> mapToCheck) {
+        Map<String, String> result = new HashMap<>();
+        for (String key: mapToCheck.keySet()) {
+            String val = mapToCheck.get(key);
+            String[] temp = val.split(",");
+            if (temp.length == 1 && animalStock.getLiveStock().get(val) > 0) {
+                result.put(key, val);
+            }
+        }
+        return result;
     }
 
     //TODO

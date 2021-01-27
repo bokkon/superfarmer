@@ -23,7 +23,6 @@ public class ExchangeTable {
         exchanges.put("Horse", "2 Cow");
         exchanges.put("SmallDog", "Sheep");
         exchanges.put("BigDog", "Cow");
-
         exchanges.put("6 Rabbit", "Sheep");
         exchanges.put("2 Sheep", "Pig");
         exchanges.put("3 Pig", "Cow");
@@ -57,11 +56,4 @@ public class ExchangeTable {
         return exchanges;
     }
 
-    public Map<String, List<Animal>> getExchangesHelp1() {
-        return exchangesHelp1;
-    }
-
-    public Map<String, Animal> getExchangesHelp2() {
-        return exchangesHelp2;
-    }
 }
