@@ -14,7 +14,7 @@ public final class SmallDog implements ProtectorAnimal {
     @Override
     public Map<Animal, Integer> changeableTo() {
         Map<Animal, Integer> result = new HashMap<>();
-        result.put(new Cow(), 1);
+        result.put(new Sheep(), 1);
         return result;
     }
 

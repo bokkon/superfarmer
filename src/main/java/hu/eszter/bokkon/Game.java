@@ -65,7 +65,19 @@ public class Game {
     }
 
     //TODO
-    private void getPossibleChanges(Farmer act) {
+    private void getPossibleChanges(Farmer actFarmer) {
+        Map<Animal, Map<Animal, Integer>> changes1 = getPossibleSimpleChanges(actFarmer);
+
+    }
+
+    //TODO change back to private
+    public Map<Animal, Map<Animal, Integer>> getPossibleSimpleChanges(Farmer actFarmer) {
+        Map<Animal, Map<Animal, Integer>> result = new HashMap<>();
+        Map<Animal, Integer> actStock = actFarmer.getFarmerLiveStock();
+        for (Animal key: actStock.keySet()) {
+            result.putIfAbsent(key, key.changeableTo());
+        }
+        return result;
     }
 
     //TODO
@@ -74,7 +86,8 @@ public class Game {
 
     private boolean checkWin(Farmer actFarmer) {
         Map<Animal, Integer> farmerAnimals = actFarmer.getFarmerLiveStock();
-        int animalCounter = (int) farmerAnimals.keySet().stream().filter(key -> !key.equals(new SmallDog()) && !key.equals(new BigDog())).count();
+        int animalCounter = (int) farmerAnimals.keySet().stream()
+                .filter(key -> !key.equals(new SmallDog()) && !key.equals(new BigDog())).count();
         return animalCounter == 5;
     }
 
