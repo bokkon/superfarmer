@@ -1,6 +1,6 @@
 package hu.eszter.bokkon.model.participants;
 
-import hu.eszter.bokkon.model.animal.Animal;
+import hu.eszter.bokkon.model.animal.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,55 +8,55 @@ import java.util.Map;
 
 public class AnimalStock implements MoveAnimal {
 
-    private Integer animalCount;
-    private Map<String, Integer> liveStock = new HashMap<>();
+    private Map<Animal, Integer> liveStock = new HashMap<>();
+    private int animalCount;
 
     public AnimalStock() {
         animalCount = 128;
-        liveStock.put("Rabbit", 60);
-        liveStock.put("Sheep", 24);
-        liveStock.put("Pig", 20);
-        liveStock.put("Cow", 12);
-        liveStock.put("Horse", 6);
-        liveStock.put("SmallDog", 4);
-        liveStock.put("BigDog", 2);
+        liveStock.put(new Rabbit(), 60);
+        liveStock.put(new Sheep(), 24);
+        liveStock.put(new Pig(), 20);
+        liveStock.put(new Cow(), 12);
+        liveStock.put(new Horse(), 6);
+        liveStock.put(new SmallDog(), 4);
+        liveStock.put(new BigDog(), 2);
     }
 
-    public Map<String, Integer> getLiveStock() {
+    public Map<Animal, Integer> getLiveStock() {
         return liveStock;
     }
 
-    public Integer getAnimalCount() {
+    public int getAnimalCount() {
         return animalCount;
     }
 
-    public void setAnimalCount(Integer animalCount) {
+    public void setAnimalCount(int animalCount) {
         this.animalCount = animalCount;
     }
 
     @Override
-    public void addAnimal(String animal) {
+    public void addAnimal(Animal animal) {
         liveStock.put(animal, liveStock.get(animal) + 1);
     }
 
     @Override
-    public void addAnimals(List<String> animals) {
-        for (String actAnimal: animals) {
-            addAnimal(actAnimal);
-        }
+    public void addAnimals(List<Animal> animals) {
+        Animal animal = animals.get(0);
+        liveStock.put(animal, liveStock.get(animal) + animals.size());
     }
 
     @Override
-    public void removeAnimal(String animal) {
+    public void removeAnimal(Animal animal) {
         if (liveStock.get(animal) > 0) {
             liveStock.put(animal, liveStock.get(animal) - 1);
         }
     }
 
     @Override
-    public void removeAnimals(List<String> animals) {
-        for (String actAnimal: animals) {
-            removeAnimal(actAnimal);
+    public void removeAnimals(List<Animal> animals) {
+        Animal animal = animals.get(0);
+        if (liveStock.get(animal) >= animals.size()){
+            liveStock.put(animal, liveStock.get(animal) - animals.size());
         }
     }
 }
