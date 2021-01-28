@@ -13,7 +13,7 @@ public class Main {
         Game newGame = new Game();
         newGame.init();
 
-        //TODO delete this, it it for testing
+        //TODO delete this later
         Farmer player = newGame.getFarmers().get(0);
         Map<Animal, Integer> stock = newGame.getAnimalStock().getLiveStock();
         Map<Animal, Integer> plStock = player.getFarmerLiveStock();
@@ -23,6 +23,6 @@ public class Main {
         plStock.put(new Pig(), 2);
         plStock.put(new Sheep(), 1);
         Util util = new Util();
-        util.printSimpleChangesMap(newGame.getPossibleSimpleChanges(player));
+        util.printSimpleChangesMap(newGame. getPossibleChanges(player));
     }
 }

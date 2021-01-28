@@ -35,6 +35,7 @@ public class Game {
         this.farmers.addAll(Arrays.asList(initializer.createPlayer("Jen"), initializer.createPlayer("Bob")));
     }
 
+    //TODO
     public void run() {
         while(animalStock.getAnimalCount() != 0 || !thereIsAWinner) {
             doRound();
@@ -44,17 +45,15 @@ public class Game {
     //TODO
     private void doRound() {
         for (Farmer actFarmer: farmers) {
-            getPossibleChanges(actFarmer);
-            actFarmer.change();
+            Map<Animal, Map<Animal, Integer>> possChanges = getPossibleChanges(actFarmer);
+            actFarmer.change(possChanges);
             if (checkWin(actFarmer)){
                 thereIsAWinner = true;
                 System.out.println("Congratulations! " + actFarmer.getName() + " you win!");
                 System.exit(0);
             }
             Animal result1 = actFarmer.rollDice(dice1);
-            printDiceResult(result1);
             Animal result2 = actFarmer.rollDice(dice2);
-            printDiceResult(result2);
             evaluateDiceResult(result1, result2);
             if (checkWin(actFarmer)){
                 thereIsAWinner = true;
@@ -64,20 +63,24 @@ public class Game {
         }
     }
 
-    //TODO
-    private void getPossibleChanges(Farmer actFarmer) {
+    //TODO check availability + TODO change back to private
+    public Map<Animal, Map<Animal, Integer>> getPossibleChanges(Farmer actFarmer) {
         Map<Animal, Map<Animal, Integer>> changes1 = getPossibleSimpleChanges(actFarmer);
-
+        return changes1;
     }
 
-    //TODO change back to private
-    public Map<Animal, Map<Animal, Integer>> getPossibleSimpleChanges(Farmer actFarmer) {
+    private Map<Animal, Map<Animal, Integer>> getPossibleSimpleChanges(Farmer actFarmer) {
         Map<Animal, Map<Animal, Integer>> result = new HashMap<>();
         Map<Animal, Integer> actStock = actFarmer.getFarmerLiveStock();
         for (Animal key: actStock.keySet()) {
             result.putIfAbsent(key, key.changeableTo());
         }
         return result;
+    }
+
+    //TODO
+    public Map<Animal, Map<Animal, Double>> getPossibleMultipleChanges(Farmer actFarmer) {
+        return new HashMap<>();
     }
 
     //TODO

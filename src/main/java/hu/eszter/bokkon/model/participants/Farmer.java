@@ -57,7 +57,7 @@ public class Farmer implements MoveAnimal {
     }
 
     //TODO
-    public void change() {}
+    public void change(Map<Animal, Map<Animal, Integer>> map) {}
 
     public Animal rollDice(Dice dice) {
         int randomNo = random.nextInt(12);
