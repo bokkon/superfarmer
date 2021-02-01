@@ -22,34 +22,34 @@ public class Farmer implements MoveAnimal {
         return farmerLiveStock;
     }
 
+    /**
+     * Implementation of addAnimals method of MoveAnimal interface. Adds given number of the same type of animal to
+     * the animal stock of the farmer(player), which is an empty map by default. If the the stock doesn't contain the
+     * type of animal yet, it adds it to the stock.
+     *
+     * @param animal  type of animal to be added
+     * @param howMany number of the same type of animal to be added
+     */
     @Override
-    public void addAnimal(Animal animal) {
-        farmerLiveStock.putIfAbsent(animal, 0);
-        farmerLiveStock.put(animal, farmerLiveStock.get(animal) + 1);
-    }
-
-    @Override
-    public void addAnimals(List<Animal> animals) {
-        Animal animal = animals.get(0);
-        farmerLiveStock.putIfAbsent(animal, 0);
-        farmerLiveStock.put(animal, farmerLiveStock.get(animal) + animals.size());
-    }
-
-    @Override
-    public void removeAnimal(Animal animal) {
-        if (farmerLiveStock.get(animal) > 0) {
-            farmerLiveStock.put(animal, farmerLiveStock.get(animal) - 1);
-        }
-        if (farmerLiveStock.get(animal) == 0) {
-            farmerLiveStock.remove(animal);
+    public void addAnimals(Animal animal, int howMany) {
+        if (1 <= howMany) {
+            farmerLiveStock.putIfAbsent(animal, 0);
+            farmerLiveStock.computeIfPresent(animal, (k, v) -> v + howMany);
         }
     }
 
+    /**
+     * Implementation of removeAnimals method of MoveAnimal interface. Removes given number of the same type of animal
+     * from the animal stock of the farmer(player) if there are available number of animals in the stock, which is an
+     * empty map by default. In case the number of animals becomes 0, it removes the tape of animal from the stock.
+     *
+     * @param animal  type of animal to be removed
+     * @param howMany number of the same type of animal to be removed
+     */
     @Override
-    public void removeAnimals(List<Animal> animals) {
-        Animal animal = animals.get(0);
-        if (farmerLiveStock.get(animal) >= animals.size()) {
-            farmerLiveStock.put(animal, farmerLiveStock.get(animal) - animals.size());
+    public void removeAnimals(Animal animal, int howMany) {
+        if (farmerLiveStock.get(animal) >= howMany) {
+            farmerLiveStock.computeIfPresent(animal, (k, v) -> v - howMany);
         }
         if (farmerLiveStock.get(animal) == 0) {
             farmerLiveStock.remove(animal);
@@ -57,7 +57,8 @@ public class Farmer implements MoveAnimal {
     }
 
     //TODO
-    public void change(Map<Animal, Map<Animal, Integer>> map) {}
+    public void change(Map<Animal, Map<Animal, Integer>> map) {
+    }
 
     public Animal rollDice(Dice dice) {
         int randomNo = random.nextInt(12);
