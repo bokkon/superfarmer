@@ -1,7 +1,7 @@
 package hu.eszter.bokkon;
 
 import hu.eszter.bokkon.model.animal.*;
-import hu.eszter.bokkon.model.participants.AnimalStock;
+import hu.eszter.bokkon.model.participants.AnimalBaseStock;
 import hu.eszter.bokkon.model.participants.Dice;
 import hu.eszter.bokkon.model.participants.Farmer;
 import hu.eszter.bokkon.service.Initializer;
@@ -10,7 +10,7 @@ import java.util.*;
 
 public class Game {
 
-    private AnimalStock animalStock;
+    private AnimalBaseStock animalStock;
     private final Dice dice1;
     private final Dice dice2;
     private List<Farmer> farmers = new ArrayList<>();
@@ -26,7 +26,7 @@ public class Game {
         return farmers;
     }
 
-    public AnimalStock getAnimalStock() {
+    public AnimalBaseStock getAnimalStock() {
         return animalStock;
     }
 

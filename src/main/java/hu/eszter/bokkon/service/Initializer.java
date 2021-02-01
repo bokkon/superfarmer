@@ -1,10 +1,7 @@
 package hu.eszter.bokkon.service;
 
-import hu.eszter.bokkon.model.animal.Animal;
-import hu.eszter.bokkon.model.animal.Pig;
-import hu.eszter.bokkon.model.animal.Rabbit;
-import hu.eszter.bokkon.model.animal.Sheep;
-import hu.eszter.bokkon.model.participants.AnimalStock;
+import hu.eszter.bokkon.model.animal.*;
+import hu.eszter.bokkon.model.participants.AnimalBaseStock;
 import hu.eszter.bokkon.model.participants.Dice;
 import hu.eszter.bokkon.model.participants.Farmer;
 
@@ -14,8 +11,16 @@ import java.util.stream.Stream;
 
 public class Initializer {
 
-    public static AnimalStock createAnimalStock() {
-        return new AnimalStock();
+    public static AnimalBaseStock createAnimalStock() {
+        return new AnimalBaseStock();
+    }
+
+    public static Fox createFox() {
+        return new Fox();
+    }
+
+    private static Wolf createWolf() {
+        return new Wolf();
     }
 
     public static Dice createDice(Animal a1, Animal a2, Animal a3) {
