@@ -14,11 +14,11 @@ import java.util.stream.Stream;
 
 public class Initializer {
 
-    public AnimalStock createAnimalStock() {
+    public static AnimalStock createAnimalStock() {
         return new AnimalStock();
     }
 
-    public Dice createDice(Animal a1, Animal a2, Animal a3) {
+    public static Dice createDice(Animal a1, Animal a2, Animal a3) {
         List<Animal> diceSides = new ArrayList<>();
         diceSides.addAll(Stream.generate(Rabbit::new).limit(6).collect(Collectors.toList()));
         diceSides.addAll(Stream.generate(Sheep::new).limit(2).collect(Collectors.toList()));
@@ -27,7 +27,7 @@ public class Initializer {
         return new Dice(diceSides);
     }
 
-    public Farmer createPlayer(String name) {
+    public static Farmer createPlayer(String name) {
         return new Farmer(name);
     }
 }

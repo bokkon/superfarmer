@@ -15,12 +15,11 @@ public class Game {
     private final Dice dice2;
     private List<Farmer> farmers = new ArrayList<>();
     private boolean thereIsAWinner = false;
-    Initializer initializer = new Initializer();
 
     public Game() {
-        this.animalStock = initializer.createAnimalStock();
-        this.dice1 = initializer.createDice(new Sheep(), new Cow(), new Wolf());
-        this.dice2 = initializer.createDice(new Pig(), new Horse(), new Fox());
+        this.animalStock = Initializer.createAnimalStock();
+        this.dice1 = Initializer.createDice(new Sheep(), new Cow(), new Wolf());
+        this.dice2 = Initializer.createDice(new Pig(), new Horse(), new Fox());
     }
 
     public List<Farmer> getFarmers() {
@@ -32,7 +31,7 @@ public class Game {
     }
 
     public void init() {
-        this.farmers.addAll(Arrays.asList(initializer.createPlayer("Jen"), initializer.createPlayer("Bob")));
+        this.farmers.addAll(Arrays.asList(Initializer.createPlayer("Jen"), Initializer.createPlayer("Bob")));
     }
 
     //TODO
