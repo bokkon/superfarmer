@@ -24,5 +24,7 @@ public class Main {
         plStock.put(new Sheep(), 1);
         Util util = new Util();
         util.printSimpleChangesMap(newGame. getPossibleChanges(player));
+
+//        newGame.getDice1().getDiceSides().forEach( a -> System.out.println(a.getClass().getSimpleName()));
     }
 }
