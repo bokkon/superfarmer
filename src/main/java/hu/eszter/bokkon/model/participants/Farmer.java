@@ -8,7 +8,7 @@ public class Farmer implements MoveAnimal {
 
     private final String name;
     private final Random random = new Random();
-    private Map<Animal, Integer> farmerLiveStock = new HashMap<>();
+    private Map<Animal, Integer> farmerLiveStock = new LinkedHashMap<>();
 
     public Farmer(String name) {
         this.name = name;
@@ -57,7 +57,7 @@ public class Farmer implements MoveAnimal {
     }
 
     //TODO
-    public void change(Map<Animal, Map<Animal, Integer>> map) {
+    public void change(Map<Animal, Map<Animal, Double>> map) {
     }
 
     public Animal rollDice(Dice dice) {
