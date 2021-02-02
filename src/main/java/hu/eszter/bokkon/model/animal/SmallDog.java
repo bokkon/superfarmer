@@ -12,9 +12,9 @@ public final class SmallDog implements ProtectorAnimal {
     }
 
     @Override
-    public Map<Animal, Integer> changeableTo() {
-        Map<Animal, Integer> result = new HashMap<>();
-        result.put(new Sheep(), 1);
+    public Map<Animal, Double> changeableTo() {
+        Map<Animal, Double> result = new HashMap<>();
+        result.put(new Sheep(), 1.0);
         return result;
     }
 

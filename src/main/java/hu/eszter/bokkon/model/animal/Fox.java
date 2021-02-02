@@ -11,7 +11,7 @@ public final class Fox implements AttackerAnimal {
     }
 
     @Override
-    public Map<Animal, Integer> changeableTo() {
+    public Map<Animal, Double> changeableTo() {
         return new HashMap<>();
     }
 }

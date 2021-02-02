@@ -4,6 +4,6 @@ import java.util.Map;
 
 public interface Animal {
 
-   Map<Animal, Integer> changeableTo();
+    Map<Animal, Double> changeableTo();
 
 }

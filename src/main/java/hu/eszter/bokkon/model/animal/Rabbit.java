@@ -12,8 +12,10 @@ public final class Rabbit implements Animal {
     }
 
     @Override
-    public Map<Animal, Integer> changeableTo() {
-        return new HashMap<>();
+    public Map<Animal, Double> changeableTo() {
+        Map<Animal, Double> result = new HashMap<>();
+        result.put(new Sheep(), 1.0/6);
+        return result;
     }
 
     @Override

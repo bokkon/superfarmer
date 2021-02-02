@@ -12,9 +12,9 @@ public final class Horse implements Animal {
     }
 
     @Override
-    public Map<Animal, Integer> changeableTo() {
-        Map<Animal, Integer> result = new HashMap<>();
-        result.put(new Cow(), 2);
+    public Map<Animal, Double> changeableTo() {
+        Map<Animal, Double> result = new HashMap<>();
+        result.put(new Cow(), 2.0);
         return result;
     }
 
