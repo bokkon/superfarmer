@@ -22,12 +22,12 @@ public class Util {
                 double count = actMap.get(actAnimal);
                 if (count >= 1.0) {
                     String spaces = getSpaces(8, animalName.length());
-                    System.out.println("1 " + animalName + spaces + " for:   "
+                    System.out.println("1 " + animalName + spaces + " ===>   "
                             + (int) count + " " + actAnimal.getClass().getSimpleName() + (count == 1 ? "" : "s"));
                 } else if (count > 0.0) {
                     String spaces = getSpaces(7, animalName.length());
                     System.out.println((int) (1 / count) + " " + animalName + ((int) (1 / count) == 1 ? " " : "s") + spaces
-                            + " for:   1 " + actAnimal.getClass().getSimpleName());
+                            + " ===>   1 " + actAnimal.getClass().getSimpleName());
                 }
             }
         }
