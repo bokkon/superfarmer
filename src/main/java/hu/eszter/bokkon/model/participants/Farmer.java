@@ -4,6 +4,9 @@ import hu.eszter.bokkon.model.animal.Animal;
 
 import java.util.*;
 
+/**
+ * Farmer is the player, who can collect animals. 2-4 players can play in 1 game.
+ */
 public class Farmer implements MoveAnimal {
 
     private final String name;
