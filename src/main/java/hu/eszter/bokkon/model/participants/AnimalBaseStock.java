@@ -2,7 +2,7 @@ package hu.eszter.bokkon.model.participants;
 
 import hu.eszter.bokkon.model.animal.*;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class AnimalBaseStock implements MoveAnimal {
 
-    private Map<Animal, Integer> liveStock = new HashMap<>();
+    private Map<Animal, Integer> liveStock = new LinkedHashMap<>();
     private int animalCount;
 
     public AnimalBaseStock() {
