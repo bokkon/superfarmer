@@ -36,7 +36,7 @@ public class Game {
 
     //TODO
     public void run() {
-        while (animalStock.getAnimalCount() != 0 || !thereIsAWinner) {
+        while (!thereIsAWinner) {
             doRound();
         }
     }
@@ -45,7 +45,7 @@ public class Game {
     private void doRound() {
         for (Farmer actFarmer : farmers) {
             Map<Animal, Map<Animal, Double>> possChanges = getPossibleChanges(actFarmer, animalStock.getLiveStock());
-            actFarmer.change(possChanges);
+            actFarmer.change(possChanges, 2);
             if (checkWin(actFarmer)) {
                 thereIsAWinner = true;
                 System.out.println("Congratulations! " + actFarmer.getName() + " you win!");
@@ -124,5 +124,15 @@ public class Game {
 
     private void printDiceResult(Animal result) {
         System.out.println("The result of the dice rolled is:  " + result.getClass().getSimpleName());
+    }
+
+    public void welcome() {
+        System.out.println(" _____    __    __    ______   _______  ______    ______    .        ______    ___      ___  _______  ______");
+        System.out.println("||   ||   ||    ||   ||    \\\\  ||       ||    \\\\  ||        /\\       ||    \\\\  ||\\\\    //||  ||       ||    \\\\");
+        System.out.println("\\\\        ||    ||   ||    //  ||       ||    //  ||       //\\\\      ||    //  || \\\\  // ||  ||       ||    // ");
+        System.out.println(" ----     ||    ||   || ---    ||----   || ---    ||----  //--\\\\     || ---    ||  \\\\//  ||  ||----   || ---");
+        System.out.println("     \\\\   ||    ||   ||        ||       ||  \\\\    ||     //    \\\\    ||  \\\\    ||   ---  ||  ||       ||  \\\\");
+        System.out.println("||   ||   \\\\    //   ||        ||       ||   \\\\   ||    //      \\\\   ||   \\\\   ||        ||  ||       ||   \\\\");
+        System.out.println(" -----      ----     --        -------  --    --  --   --        --  --    --  --        --  -------  --    --");
     }
 }

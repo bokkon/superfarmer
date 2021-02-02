@@ -60,7 +60,14 @@ public class Farmer implements MoveAnimal {
     }
 
     //TODO
-    public void change(Map<Animal, Map<Animal, Double>> map) {
+    public void change(Map<Animal, Map<Animal, Double>> map, int selected) {
+//        int index = 1;
+//        for (Animal actAnimal: map.keySet()) {
+//            if (index == selected) {
+//
+//            }
+//            index++;
+//        }
     }
 
     public Animal rollDice(Dice dice) {
