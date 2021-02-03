@@ -12,6 +12,7 @@ public class Farmer implements MoveAnimal {
     private final String name;
     private final Random random = new Random();
     private Map<Animal, Integer> farmerLiveStock = new LinkedHashMap<>();
+    private Map<Animal, Map<Animal, Double>> actualPossibleChanges = new LinkedHashMap<>();
 
     public Farmer(String name) {
         this.name = name;
@@ -57,17 +58,6 @@ public class Farmer implements MoveAnimal {
         if (farmerLiveStock.get(animal) == 0) {
             farmerLiveStock.remove(animal);
         }
-    }
-
-    //TODO
-    public void change(Map<Animal, Map<Animal, Double>> map, int selected) {
-//        int index = 1;
-//        for (Animal actAnimal: map.keySet()) {
-//            if (index == selected) {
-//
-//            }
-//            index++;
-//        }
     }
 
     public Animal rollDice(Dice dice) {
