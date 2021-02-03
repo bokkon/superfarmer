@@ -53,6 +53,8 @@ public class Util {
                 }
             }
         }
+        System.out.println();
+        System.out.println();
     }
 
     private static void printEntrySet(String name, int count) {
@@ -63,5 +65,15 @@ public class Util {
 
     private static String getSpaces(int maxLength, int wordLength) {
         return String.join("", Collections.nCopies(maxLength - wordLength, " "));
+    }
+
+    public static void startMessage() {
+        System.out.println(" _____    __    __    ______   _______  ______    ______    .        ______    ___      ___  _______  ______");
+        System.out.println("||   ||   ||    ||   ||    \\\\  ||       ||    \\\\  ||        /\\       ||    \\\\  ||\\\\    //||  ||       ||    \\\\");
+        System.out.println("\\\\        ||    ||   ||    //  ||       ||    //  ||       //\\\\      ||    //  || \\\\  // ||  ||       ||    // ");
+        System.out.println(" ----     ||    ||   || ---    ||----   || ---    ||----  //--\\\\     || ---    ||  \\\\//  ||  ||----   || ---");
+        System.out.println("     \\\\   ||    ||   ||        ||       ||  \\\\    ||     //    \\\\    ||  \\\\    ||   ---  ||  ||       ||  \\\\");
+        System.out.println("||   ||   \\\\    //   ||        ||       ||   \\\\   ||    //      \\\\   ||   \\\\   ||        ||  ||       ||   \\\\");
+        System.out.println(" -----      ----     --        -------  --    --  --   --        --  --    --  --        --  -------  --    --");
     }
 }
