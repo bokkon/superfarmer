@@ -39,6 +39,7 @@ public class Game {
     }
 
     public void run() {
+        Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
         while (!thereIsAWinner) {
             doRound();
             if (animalBaseStock.getLiveStock().values().stream().mapToInt(v -> v).sum() == 0) {
@@ -49,14 +50,13 @@ public class Game {
     }
 
     private void doRound() {
-        Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
         for (Farmer actFarmer : farmers) {
             displayActualFarmersName(actFarmer);
             System.out.println(transactExchange(actFarmer));
             Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
             if (checkWin(actFarmer)) {
                 thereIsAWinner = true;
-                System.out.println("Congratulations! " + actFarmer.getName() + " you win!");
+                System.out.println("Congratulations! " + actFarmer.getName() + " you are the Superfarmer!");
                 scan.close();
                 System.exit(0);
             }
@@ -64,7 +64,7 @@ public class Game {
 //            Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
 //            if (checkWin(actFarmer)) {
 //                thereIsAWinner = true;
-//                System.out.println("Congratulations! " + actFarmer.getName() + " you win!");
+//                System.out.println("Congratulations! " + actFarmer.getName() + " are the Superfarmer!");
 //                scan.close();
 //                System.exit(0);
 //            }
@@ -135,14 +135,21 @@ public class Game {
     }
 
 
-    private boolean checkInputNumber(String input, int count) {
+    /**
+     * Checks the input required from the player.
+     *
+     * @param input an input received from the player in String format
+     * @param maxValue is the maximum value the input can have after converted into Integer
+     * @return whether the input is valid
+     */
+    private boolean checkInputNumber(String input, int maxValue) {
         if (input == null) {
             return false;
         }
         try {
             int number = Integer.parseInt(input);
-            if (number > count || number < 0) {
-                System.out.println("Please choose a number between 0 and " + count + "!");
+            if (number > maxValue || number < 0) {
+                System.out.println("Please choose a number between 0 and " + maxValue + "!");
                 return false;
             }
         } catch (NumberFormatException nfe) {
