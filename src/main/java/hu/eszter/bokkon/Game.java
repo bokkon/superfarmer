@@ -94,7 +94,6 @@ public class Game {
 
     private int getExchangeSelectionInput(Farmer actFarmer, int maxValue) {
         System.out.println(actFarmer.getName() + " please pick an exchange! (1 to " + maxValue + ") Pick 0 if you don't wish to exchange.");
-        Scanner scan = new Scanner(System.in);
         String input;
         do {
             input = scan.next();

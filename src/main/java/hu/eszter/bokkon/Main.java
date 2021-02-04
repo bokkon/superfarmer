@@ -17,7 +17,7 @@ public class Main {
         newGame.getFarmers().get(1).addAnimals(new Cow(), 6);
         newGame.getFarmers().get(1).addAnimals(new Pig(), 3);
         newGame.getFarmers().get(1).addAnimals(new SmallDog(), 1);
-//        Util.displayAllStocks(newGame.getAnimalBaseStock().getLiveStock(), newGame.getFarmers());
+
         newGame.run();
 
     }
