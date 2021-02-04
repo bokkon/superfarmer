@@ -7,6 +7,14 @@ import java.util.*;
 
 public class Util {
 
+    private static final String ANSI_BRIGHT_BLUE   = "\u001B[94m";
+    private static final String ANSI_BLUE   = "\u001B[34m";
+    private static final String ANSI_CYAN   = "\u001B[36m";
+    private static final String ANSI_BRIGHT_CYAN   = "\u001B[96m";
+    private static final String RETURN_COLOUR = "\u001B[0m";
+    public static final String ANSI_BG_PURPLE = "\u001B[45m";
+    public static final String ANSI_BG_CYAN   = "\u001B[46m";
+    public static final String ANSI_BRIGHT_BLACK = "\u001B[97m";
     /**
      * Displays all the possible exchanges between 2 stocks: the actual farmer's animal stock and another animal stock.
      *
@@ -18,7 +26,7 @@ public class Util {
             String animalName = exchangeAnimal.getClass().getSimpleName();
             Map<Animal, Double> actMap = possibleChanges.get(exchangeAnimal);
             for (Animal returnAnimal : actMap.keySet()) {
-                System.out.print((line > 9 ? "" : " ") + line++ + ".) ");
+                System.out.print(ANSI_BG_PURPLE + ANSI_BRIGHT_BLACK + (line > 9 ? "" : " ") + line++ + ".) ");
                 double count = actMap.get(returnAnimal);
                 if (count >= 1.0) {
                     System.out.println("1 " + animalName + getSpaces(8, animalName.length()) + " ===>   "
@@ -30,7 +38,7 @@ public class Util {
                 }
             }
         }
-        System.out.println();
+        System.out.println(RETURN_COLOUR);
     }
 
     /**
@@ -38,8 +46,8 @@ public class Util {
      */
     public static void displayAllStocks(Map<Animal, Integer> baseStock, List<Farmer> allFarmers) {
         System.out.println();
-        System.out.print("Base Stock" + getSpaces(14, 0));
-        allFarmers.forEach( f -> System.out.print(f.getName() + getSpaces(24, f.getName().length())));
+        System.out.print(ANSI_BG_CYAN + ANSI_BRIGHT_BLACK + " Base Stock" + getSpaces(14, 0));
+        allFarmers.forEach( f -> System.out.print(" " + f.getName() + getSpaces(24, f.getName().length())));
         System.out.println();
         System.out.println(String.join("", Collections.nCopies(24*(allFarmers.size()+1)-10, "-")));
         for (Animal actAnimal: baseStock.keySet()) {
@@ -55,11 +63,11 @@ public class Util {
             }
         }
         System.out.println();
-        System.out.println();
+        System.out.println(RETURN_COLOUR);
     }
 
     private static void printEntrySet(String name, int count) {
-        System.out.print(name + getSpaces(9,name.length()) + ": "
+        System.out.print(" " + name + getSpaces(9,name.length()) + ": "
                 + (String.valueOf(count).length() == 1 ? " " : "") + count + getSpaces(11,0));
     }
 
@@ -69,12 +77,14 @@ public class Util {
     }
 
     public static void startMessage() {
-        System.out.println(" _____    __    __    ______   _______  ______    ______    .        ______    ___      ___  _______  ______");
-        System.out.println("||   ||   ||    ||   ||    \\\\  ||       ||    \\\\  ||        /\\       ||    \\\\  ||\\\\    //||  ||       ||    \\\\");
-        System.out.println("\\\\        ||    ||   ||    //  ||       ||    //  ||       //\\\\      ||    //  || \\\\  // ||  ||       ||    // ");
-        System.out.println(" ----     ||    ||   || ---    ||----   || ---    ||----  //--\\\\     || ---    ||  \\\\//  ||  ||----   || ---");
-        System.out.println("     \\\\   ||    ||   ||        ||       ||  \\\\    ||     //    \\\\    ||  \\\\    ||   ---  ||  ||       ||  \\\\");
-        System.out.println("||   ||   \\\\    //   ||        ||       ||   \\\\   ||    //      \\\\   ||   \\\\   ||        ||  ||       ||   \\\\");
-        System.out.println(" -----      ----     --        -------  --    --  --   --        --  --    --  --        --  -------  --    --");
+        System.out.println(ANSI_BRIGHT_BLUE + " _____    __    __    ______   _______  ______    ______    .        ______    ___      ___  _______  ______"  + RETURN_COLOUR);
+        System.out.println(ANSI_BRIGHT_BLUE + "||   ||   ||    ||   ||    \\\\  ||       ||    \\\\  ||        /\\       ||    \\\\  ||\\\\    //||  ||       ||    \\\\"  + RETURN_COLOUR);
+        System.out.println(ANSI_BLUE + "\\\\        ||    ||   ||    //  ||       ||    //  ||       //\\\\      ||    //  || \\\\  // ||  ||       ||    // "  + RETURN_COLOUR);
+        System.out.println(ANSI_BLUE + " ----     ||    ||   || ---    ||----   || ---    ||----  //--\\\\     || ---    ||  \\\\//  ||  ||----   || ---"  + RETURN_COLOUR);
+        System.out.println(ANSI_CYAN + "     \\\\   ||    ||   ||        ||       ||  \\\\    ||     //    \\\\    ||  \\\\    ||   ---  ||  ||       ||  \\\\"  + RETURN_COLOUR);
+        System.out.println(ANSI_CYAN + "||   ||   \\\\    //   ||        ||       ||   \\\\   ||    //      \\\\   ||   \\\\   ||        ||  ||       ||   \\\\"  + RETURN_COLOUR);
+        System.out.println(ANSI_BRIGHT_CYAN + " -----      ----     --        -------  --    --  --   --        --  --    --  --        --  -------  --    --" + RETURN_COLOUR);
     }
+
+
 }
