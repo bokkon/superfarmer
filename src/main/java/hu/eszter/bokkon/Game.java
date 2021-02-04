@@ -16,11 +16,13 @@ public class Game {
     private final Dice dice2;
     private List<Farmer> farmers = new ArrayList<>();
     private boolean thereIsAWinner = false;
+    private final Scanner scan;
 
     public Game() {
         this.animalBaseStock = Initializer.createAnimalStock();
         this.dice1 = Initializer.createDice(new Sheep(), new Cow(), new Wolf());
         this.dice2 = Initializer.createDice(new Pig(), new Horse(), new Fox());
+        scan = new Scanner(System.in);
     }
 
     public List<Farmer> getFarmers() {
@@ -31,14 +33,12 @@ public class Game {
         return animalBaseStock;
     }
 
-    //TODO get how many players and their names from user input, create start menu
+    //TODO get how many players and their names from user input 2-6 players
     public void init() {
         this.farmers.addAll(Arrays.asList(Initializer.createPlayer("Jen"), Initializer.createPlayer("Bob")));
     }
 
-    //TODO implement that a farmer not only be able to change with the base stock, but with other farmers as well
     public void run() {
-        Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
         while (!thereIsAWinner) {
             doRound();
             if (animalBaseStock.getLiveStock().values().stream().mapToInt(v -> v).sum() == 0) {
@@ -48,8 +48,8 @@ public class Game {
         }
     }
 
-    //TODO change back to private
-    public void doRound() {
+    private void doRound() {
+        Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
         for (Farmer actFarmer : farmers) {
             displayActualFarmersName(actFarmer);
             System.out.println(transactExchange(actFarmer));
@@ -57,15 +57,17 @@ public class Game {
             if (checkWin(actFarmer)) {
                 thereIsAWinner = true;
                 System.out.println("Congratulations! " + actFarmer.getName() + " you win!");
+                scan.close();
                 System.exit(0);
             }
 //            transactDiceRoll(actFarmer);
+//            Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
 //            if (checkWin(actFarmer)) {
 //                thereIsAWinner = true;
 //                System.out.println("Congratulations! " + actFarmer.getName() + " you win!");
+//                scan.close();
 //                System.exit(0);
 //            }
-            Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
         }
     }
 
@@ -78,14 +80,14 @@ public class Game {
     //TODO refactor so that exchange can be possible between any farmers(players) too
     private String transactExchange(Farmer actFarmer) {
         Map<Animal, Map<Animal, Double>> possExchanges = getPossibleChanges(actFarmer, animalBaseStock.getLiveStock());
-        if (possExchanges == null || possExchanges.size() == 0) {
-            return "There are no possible exchanges!";
+        if (possExchanges.size() == 0) {
+            return "There are no possible exchanges for " + actFarmer.getName() + "!";
         }
         System.out.println("Possible changes for " + actFarmer.getName() + ":\n" );
         Util.printPossibleChangesMap(possExchanges);
         int countPossibilities = possExchanges.values().stream().mapToInt(Map::size).sum();
         int selectedExchange = getExchangeSelectionInput(actFarmer, countPossibilities);
-        return doExchange(actFarmer, possExchanges, selectedExchange) ?
+        return executeExchange(actFarmer, possExchanges, selectedExchange) ?
                 "Exchange was successful!" : actFarmer.getName() + " decided not to exchange!";
     }
 
@@ -103,7 +105,7 @@ public class Game {
         return Integer.parseInt(input);
     }
 
-    private boolean doExchange(Farmer actFarmer, Map<Animal, Map<Animal, Double>> possibleExchanges, int numberOfSelected) {
+    private boolean executeExchange(Farmer actFarmer, Map<Animal, Map<Animal, Double>> possibleExchanges, int numberOfSelected) {
         if (numberOfSelected == 0) {
             return false;
         }
@@ -139,11 +141,12 @@ public class Game {
         }
         try {
             int number = Integer.parseInt(input);
-            if (number > count) {
+            if (number > count || number < 0) {
+                System.out.println("Please choose a number between 0 and " + count + "!");
                 return false;
             }
         } catch (NumberFormatException nfe) {
-            System.out.println("Please choose a valid number!");
+            System.out.println("Please enter a number!");
             return false;
         }
         return true;
@@ -155,8 +158,8 @@ public class Game {
      * @param actFarmer actual farmer(player) whose round it is
      * @return Map containing all possible changes of the actual player
      */
-    //TODO create actualPossibleChanges field in Farmer, change field farmerLiveStock to AnimalStock, move this methos to Farmer
-    Map<Animal, Map<Animal, Double>> getPossibleChanges(Farmer actFarmer, Map<Animal, Integer> stockToCheck) {
+    //TODO create actualPossibleChanges field in Farmer, move this method to Farmer
+    private Map<Animal, Map<Animal, Double>> getPossibleChanges(Farmer actFarmer, Map<Animal, Integer> stockToCheck) {
         Map<Animal, Map<Animal, Double>> result = new LinkedHashMap<>();
         Map<Animal, Integer> actStock = actFarmer.getFarmerLiveStock();
         for (Animal actAnimal : actStock.keySet()) {
