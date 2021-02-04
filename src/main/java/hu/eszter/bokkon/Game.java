@@ -36,13 +36,12 @@ public class Game {
         this.farmers.addAll(Arrays.asList(Initializer.createPlayer("Jen"), Initializer.createPlayer("Bob")));
     }
 
-    //TODO refactor!, at the moment a farmer(player) can only exchange animals with the base stock therefore it checks
-    // the animal base stock, it won't be necessary if 2 farmers can exchange
+    //TODO implement that a farmer not only be able to change with the base stock, but with other farmers as well
     public void run() {
         Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
         while (!thereIsAWinner) {
             doRound();
-            if (animalBaseStock.getLiveStock().values().stream().mapToInt(v -> v).sum() > 0 ) {
+            if (animalBaseStock.getLiveStock().values().stream().mapToInt(v -> v).sum() == 0) {
                 System.out.println("Main stock is empty!");
                 System.exit(0);
             }
@@ -54,6 +53,7 @@ public class Game {
         for (Farmer actFarmer : farmers) {
             displayActualFarmersName(actFarmer);
             System.out.println(transactExchange(actFarmer));
+            Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
             if (checkWin(actFarmer)) {
                 thereIsAWinner = true;
                 System.out.println("Congratulations! " + actFarmer.getName() + " you win!");
@@ -81,6 +81,7 @@ public class Game {
         if (possExchanges == null || possExchanges.size() == 0) {
             return "There are no possible exchanges!";
         }
+        System.out.println("Possible changes for " + actFarmer.getName() + ":\n" );
         Util.printPossibleChangesMap(possExchanges);
         int countPossibilities = possExchanges.values().stream().mapToInt(Map::size).sum();
         int selectedExchange = getExchangeSelectionInput(actFarmer, countPossibilities);
@@ -90,16 +91,15 @@ public class Game {
 
 
     private int getExchangeSelectionInput(Farmer actFarmer, int maxValue) {
-        System.out.println(actFarmer.getName() + " please enter the number of the exchange you choose! (1 to " + maxValue + ") Choose 0 if you don't wish to exchange.");
+        System.out.println(actFarmer.getName() + " please pick an exchange! (1 to " + maxValue + ") Pick 0 if you don't wish to exchange.");
         Scanner scan = new Scanner(System.in);
         String input;
         do {
-            input = scan.next().trim();
+            input = scan.next();
             if ("q".equals(input.toLowerCase())) {
                 System.exit(0);
             }
         } while (!checkInputNumber(input, maxValue));
-        scan.close();
         return Integer.parseInt(input);
     }
 
