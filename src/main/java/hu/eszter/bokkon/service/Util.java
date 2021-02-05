@@ -12,9 +12,9 @@ public class Util {
     private static final String ANSI_CYAN   = "\u001B[36m";
     private static final String ANSI_BRIGHT_CYAN   = "\u001B[96m";
     private static final String RETURN_COLOUR = "\u001B[0m";
-    public static final String ANSI_BG_PURPLE = "\u001B[45m";
-    public static final String ANSI_BG_CYAN   = "\u001B[46m";
-    public static final String ANSI_BRIGHT_BLACK = "\u001B[97m";
+    private static final String ANSI_BG_PURPLE = "\u001B[45m";
+    private static final String ANSI_BG_CYAN   = "\u001B[46m";
+    private static final String ANSI_BRIGHT_BLACK = "\u001B[97m";
     /**
      * Displays all the possible exchanges between 2 stocks: the actual farmer's animal stock and another animal stock.
      *
