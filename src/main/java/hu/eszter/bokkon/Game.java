@@ -44,7 +44,7 @@ public class Game {
             doRound();
             if (animalBaseStock.getLiveStock().values().stream().mapToInt(v -> v).sum() == 0) {
                 System.out.println("Main stock is empty!");
-                System.exit(0);
+                return;
             }
         }
     }
@@ -58,7 +58,7 @@ public class Game {
                 thereIsAWinner = true;
                 System.out.println("Congratulations! " + actFarmer.getName() + " you are the Superfarmer!");
                 scan.close();
-                System.exit(0);
+                return;
             }
 //            transactDiceRoll(actFarmer);
 //            Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
@@ -66,7 +66,7 @@ public class Game {
 //                thereIsAWinner = true;
 //                System.out.println("Congratulations! " + actFarmer.getName() + " are the Superfarmer!");
 //                scan.close();
-//                System.exit(0);
+//                return;
 //            }
         }
     }
