@@ -98,7 +98,7 @@ public class Game {
         do {
             input = scan.next();
             if ("q".equals(input.toLowerCase())) {
-                System.exit(0);
+                break;
             }
         } while (!checkInputNumber(input, maxValue));
         return Integer.parseInt(input);
