@@ -56,7 +56,8 @@ public class Game {
             Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
             if (checkWin(actFarmer)) {
                 thereIsAWinner = true;
-                System.out.println("Congratulations! " + actFarmer.getName() + " you are the Superfarmer!");
+                System.out.println("Congratulations! ".toUpperCase() + Util.getAnsiBrightRed() + actFarmer.getName() + Util.getReturnColour()
+                         + " you are the " + Util.getAnsiBrightGreen() + "Superfarmer!" + Util.getReturnColour() );
                 scan.close();
                 return;
             }
