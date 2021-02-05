@@ -37,8 +37,7 @@ public class Farmer implements MoveAnimal {
     @Override
     public void addAnimals(Animal animal, int howMany) {
         if (1 <= howMany) {
-            farmerLiveStock.putIfAbsent(animal, 0);
-            farmerLiveStock.computeIfPresent(animal, (k, v) -> v + howMany);
+            farmerLiveStock.merge(animal, howMany, (oldValue, newValue) -> oldValue + howMany);
         } else {
             System.out.println("No animal was added to " + name + "'s stock.");
         }
