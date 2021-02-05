@@ -98,7 +98,7 @@ public class Game {
         do {
             input = scan.next();
             if ("q".equals(input.toLowerCase())) {
-                break;
+                System.exit(0);
             }
         } while (!checkInputNumber(input, maxValue));
         return Integer.parseInt(input);
@@ -222,8 +222,9 @@ public class Game {
      */
     private boolean checkWin(Farmer actFarmer) {
         Map<Animal, Integer> farmerAnimals = actFarmer.getFarmerLiveStock();
+        farmerAnimals.keySet().forEach(k -> System.out.println(k.getClass().getSimpleName() + " : " +  farmerAnimals.get(k)));
         int animalCounter = (int) farmerAnimals.keySet().stream()
-                .filter(key -> !key.equals(new SmallDog()) && !key.equals(new BigDog())).count();
+                .filter(key -> !key.equals(new SmallDog()) && !key.equals(new BigDog()) && farmerAnimals.get(key) >= 1).count();
         return animalCounter == 5;
     }
 
