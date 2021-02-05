@@ -7,12 +7,12 @@
  What’s included in th box of the board game:
  --2 special 12-sided dices with pictures of the animals 
  --128 cardboard counters with following animals: 
-    * 60 rabbits
-    * 24 sheep
-    * 20 pigs  
-    * 12 cows
-    * 6 horses
-    * 4 small dogs
+    * 60 rabbits / 
+    * 24 sheep / 
+    * 20 pigs / 
+    * 12 cows / 
+    * 6 horses / 
+    * 4 small dogs / 
     * 2 large dogs 
  --exchange chart 
  --manual 
