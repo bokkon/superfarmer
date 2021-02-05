@@ -48,6 +48,8 @@ public class AnimalBaseStock implements MoveAnimal {
     public void addAnimals(Animal animal, int howMany) {
         if (howMany >= 1) {
             liveStock.computeIfPresent(animal, (k, v) -> v + howMany);
+        } else {
+            System.out.println("No animal was added to the stock.");
         }
     }
 
@@ -63,6 +65,9 @@ public class AnimalBaseStock implements MoveAnimal {
     public void removeAnimals(Animal animal, int howMany) {
         if (liveStock.get(animal) >= howMany) {
             liveStock.computeIfPresent(animal, (k, v) -> v - howMany);
+        } else {
+            System.out.println("No animal was removed from the stock.");
         }
-    }
+
+}
 }

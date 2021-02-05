@@ -39,6 +39,8 @@ public class Farmer implements MoveAnimal {
         if (1 <= howMany) {
             farmerLiveStock.putIfAbsent(animal, 0);
             farmerLiveStock.computeIfPresent(animal, (k, v) -> v + howMany);
+        } else {
+            System.out.println("No animal was added to " + name + "'s stock.");
         }
     }
 
@@ -57,6 +59,8 @@ public class Farmer implements MoveAnimal {
         }
         if (farmerLiveStock.get(animal) == 0) {
             farmerLiveStock.remove(animal);
+        } else {
+            System.out.println("No animal was removed from " + name + "'s stock.");
         }
     }
 
