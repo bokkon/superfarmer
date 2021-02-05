@@ -39,6 +39,7 @@ public class Game {
     }
 
     public void run() {
+        Util.startMessage();
         Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
         while (!thereIsAWinner) {
             doRound();
