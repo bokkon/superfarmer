@@ -2,7 +2,7 @@
 
  SUPER FARMER board game:
 
- A family game for 2 to 6 players in age seven or more 
+ A family game for 2 to 6 players in age 7 or more 
 
  What’s included in th box of the board game:
  --2 special 12-sided dices with pictures of the animals 
