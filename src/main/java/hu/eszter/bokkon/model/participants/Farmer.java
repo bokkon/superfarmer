@@ -64,7 +64,7 @@ public class Farmer implements MoveAnimal {
         }
     }
 
-    public Animal rollDice(Dice dice) {
+    public Animal rollDice(Die dice) {
         int randomNo = random.nextInt(12);
         return dice.getDiceSides().get(randomNo);
     }

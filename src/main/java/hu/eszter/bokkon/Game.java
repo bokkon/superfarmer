@@ -2,7 +2,7 @@ package hu.eszter.bokkon;
 
 import hu.eszter.bokkon.model.animal.*;
 import hu.eszter.bokkon.model.participants.AnimalBaseStock;
-import hu.eszter.bokkon.model.participants.Dice;
+import hu.eszter.bokkon.model.participants.Die;
 import hu.eszter.bokkon.model.participants.Farmer;
 import hu.eszter.bokkon.service.Initializer;
 import hu.eszter.bokkon.service.Util;
@@ -12,8 +12,8 @@ import java.util.*;
 public class Game {
 
     private AnimalBaseStock animalBaseStock;
-    private final Dice dice1;
-    private final Dice dice2;
+    private final Die dice1;
+    private final Die dice2;
     private List<Farmer> farmers = new ArrayList<>();
     private boolean thereIsAWinner = false;
     private final Scanner scan;

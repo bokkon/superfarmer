@@ -5,11 +5,11 @@ import hu.eszter.bokkon.model.animal.Animal;
 import java.util.Collections;
 import java.util.List;
 
-public class Dice {
+public class Die {
 
     private final List<Animal> diceSides;
 
-    public Dice(List<Animal> diceSides) {
+    public Die(List<Animal> diceSides) {
         if (diceSides.size() != 12) {
             throw new IllegalArgumentException("The dice must have 12 sides!");
         }
