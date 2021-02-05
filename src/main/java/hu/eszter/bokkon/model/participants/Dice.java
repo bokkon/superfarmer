@@ -3,6 +3,7 @@ package hu.eszter.bokkon.model.participants;
 import hu.eszter.bokkon.model.animal.Animal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Dice {
@@ -16,6 +17,6 @@ public class Dice {
     }
 
     public List<Animal> getDiceSides() {
-        return diceSides;
+        return Collections.unmodifiableList(diceSides);
     }
 }
