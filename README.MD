@@ -1,1 +1,1 @@
-Implement Superfarmer board game logic in Java backend.
+Implement Superfarmer board game logic in Java.
