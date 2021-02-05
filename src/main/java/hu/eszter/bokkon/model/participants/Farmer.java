@@ -56,8 +56,7 @@ public class Farmer implements MoveAnimal {
     public void removeAnimals(Animal animal, int howMany) {
         if (farmerLiveStock.get(animal) >= howMany) {
             farmerLiveStock.computeIfPresent(animal, (k, v) -> v - howMany);
-        }
-        if (farmerLiveStock.get(animal) == 0) {
+        } else if (farmerLiveStock.get(animal) == 0) {
             farmerLiveStock.remove(animal);
         } else {
             System.out.println("No animal was removed from " + name + "'s stock.");
