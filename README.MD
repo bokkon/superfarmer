@@ -61,11 +61,11 @@
  
  Exchange chart
  
- 1 sheep = 6 rabbits
- 1 pig = 2 sheep
- 1 cow = 3 pigs
- 1 horse = 2 cows
- 1 small dog = 1 sheep
+ 1 sheep = 6 rabbits / 
+ 1 pig = 2 sheep / 
+ 1 cow = 3 pigs / 
+ 1 horse = 2 cows / 
+ 1 small dog = 1 sheep / 
  1 big dog = 1 cow
  
  Exchanges 
