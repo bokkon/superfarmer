@@ -37,8 +37,9 @@ public class Farmer implements MoveAnimal {
     @Override
     public void addAnimals(Animal animal, int howMany) {
         if (1 <= howMany) {
-            farmerLiveStock.putIfAbsent(animal, 0);
-            farmerLiveStock.computeIfPresent(animal, (k, v) -> v + howMany);
+            farmerLiveStock.merge(animal, howMany, (oldValue, newValue) -> oldValue + howMany);
+        } else {
+            System.out.println("No animal was added to " + name + "'s stock.");
         }
     }
 
@@ -54,13 +55,14 @@ public class Farmer implements MoveAnimal {
     public void removeAnimals(Animal animal, int howMany) {
         if (farmerLiveStock.get(animal) >= howMany) {
             farmerLiveStock.computeIfPresent(animal, (k, v) -> v - howMany);
-        }
-        if (farmerLiveStock.get(animal) == 0) {
+        } else if (farmerLiveStock.get(animal) == 0) {
             farmerLiveStock.remove(animal);
+        } else {
+            System.out.println("No animal was removed from " + name + "'s stock.");
         }
     }
 
-    public Animal rollDice(Dice dice) {
+    public Animal rollDice(Die dice) {
         int randomNo = random.nextInt(12);
         return dice.getDiceSides().get(randomNo);
     }

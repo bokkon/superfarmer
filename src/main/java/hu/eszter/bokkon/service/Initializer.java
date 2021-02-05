@@ -2,7 +2,7 @@ package hu.eszter.bokkon.service;
 
 import hu.eszter.bokkon.model.animal.*;
 import hu.eszter.bokkon.model.participants.AnimalBaseStock;
-import hu.eszter.bokkon.model.participants.Dice;
+import hu.eszter.bokkon.model.participants.Die;
 import hu.eszter.bokkon.model.participants.Farmer;
 
 import java.util.*;
@@ -23,13 +23,13 @@ public class Initializer {
         return new Wolf();
     }
 
-    public static Dice createDice(Animal a1, Animal a2, Animal a3) {
+    public static Die createDice(Animal a1, Animal a2, Animal a3) {
         List<Animal> diceSides = new ArrayList<>();
         diceSides.addAll(Stream.generate(Rabbit::new).limit(6).collect(Collectors.toList()));
         diceSides.addAll(Stream.generate(Sheep::new).limit(2).collect(Collectors.toList()));
         diceSides.add(new Pig());
         diceSides.addAll(Arrays.asList(a1, a2, a3));
-        return new Dice(diceSides);
+        return new Die(diceSides);
     }
 
     public static Farmer createPlayer(String name) {
