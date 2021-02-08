@@ -39,6 +39,7 @@ public class Game {
     }
 
     public void run() {
+        Util.startMessage();
         Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
         while (!thereIsAWinner) {
             doRound();
@@ -56,7 +57,8 @@ public class Game {
             Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
             if (checkWin(actFarmer)) {
                 thereIsAWinner = true;
-                System.out.println("Congratulations! " + actFarmer.getName() + " you are the Superfarmer!");
+                System.out.println("Congratulations! ".toUpperCase() + Util.getAnsiBrightRed() + actFarmer.getName() + Util.getReturnColour()
+                         + " you are the " + Util.getAnsiBrightGreen() + "Superfarmer!" + Util.getReturnColour() );
                 scan.close();
                 return;
             }
@@ -222,8 +224,9 @@ public class Game {
      */
     private boolean checkWin(Farmer actFarmer) {
         Map<Animal, Integer> farmerAnimals = actFarmer.getFarmerLiveStock();
+        farmerAnimals.keySet().forEach(k -> System.out.println(k.getClass().getSimpleName() + " : " +  farmerAnimals.get(k)));
         int animalCounter = (int) farmerAnimals.keySet().stream()
-                .filter(key -> !key.equals(new SmallDog()) && !key.equals(new BigDog())).count();
+                .filter(key -> !key.equals(new SmallDog()) && !key.equals(new BigDog()) && farmerAnimals.get(key) >= 1).count();
         return animalCounter == 5;
     }
 
