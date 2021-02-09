@@ -2,7 +2,9 @@ package hu.eszter.bokkon.model.participants;
 
 import hu.eszter.bokkon.model.animal.Animal;
 
-import java.util.*;
+import java.security.SecureRandom;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Farmer is the player, who can collect animals. 2-4 players can play in 1 game.
@@ -10,7 +12,7 @@ import java.util.*;
 public class Farmer implements MoveAnimal {
 
     private final String name;
-    private final Random random = new Random();
+    private final SecureRandom random = new SecureRandom();
     private Map<Animal, Integer> farmerLiveStock = new LinkedHashMap<>();
     private Map<Animal, Map<Animal, Double>> actualPossibleChanges = new LinkedHashMap<>();
 
