@@ -58,7 +58,7 @@ public class Game {
             if (checkWin(actFarmer)) {
                 thereIsAWinner = true;
                 System.out.println("Congratulations! ".toUpperCase() + Util.getAnsiBrightRed() + actFarmer.getName() + Util.getReturnColour()
-                         + " you are the " + Util.getAnsiBrightGreen() + "Superfarmer!" + Util.getReturnColour() );
+                        + " you are the " + Util.getAnsiBrightGreen() + "Superfarmer!" + Util.getReturnColour());
                 scan.close();
                 return;
             }
@@ -85,7 +85,7 @@ public class Game {
         if (possExchanges.size() == 0) {
             return "There are no possible exchanges for " + actFarmer.getName() + "!";
         }
-        System.out.println("Possible changes for " + actFarmer.getName() + ":\n" );
+        System.out.println("Possible changes for " + actFarmer.getName() + ":\n");
         Util.printPossibleChangesMap(possExchanges);
         int countPossibilities = possExchanges.values().stream().mapToInt(Map::size).sum();
         int selectedExchange = getExchangeSelectionInput(actFarmer, countPossibilities);
@@ -118,14 +118,14 @@ public class Game {
                     double count = actMap.get(returnAnimal);
                     if (count >= 1.0) {
                         actFarmer.removeAnimals(exchangeAnimal, 1);
-                        actFarmer.addAnimals(returnAnimal, (int)count);
+                        actFarmer.addAnimals(returnAnimal, (int) count);
                         animalBaseStock.addAnimals(exchangeAnimal, 1);
-                        animalBaseStock.removeAnimals(returnAnimal, (int)count);
+                        animalBaseStock.removeAnimals(returnAnimal, (int) count);
                         return true;
                     } else {
-                        actFarmer.removeAnimals(exchangeAnimal, (int)(1/count));
+                        actFarmer.removeAnimals(exchangeAnimal, (int) (1 / count));
                         actFarmer.addAnimals(returnAnimal, 1);
-                        animalBaseStock.addAnimals(exchangeAnimal, (int)(1/count));
+                        animalBaseStock.addAnimals(exchangeAnimal, (int) (1 / count));
                         animalBaseStock.removeAnimals(returnAnimal, 1);
                         return true;
                     }
@@ -139,7 +139,7 @@ public class Game {
     /**
      * Checks the input required from the player.
      *
-     * @param input an input received from the player in String format
+     * @param input    an input received from the player in String format
      * @param maxValue is the maximum value the input can have after converted into Integer
      * @return whether the input is valid
      */
@@ -161,28 +161,30 @@ public class Game {
     }
 
     /**
-     * Calculates possible changes for 1 farmer(player) in 1 round, stores the result in a map.
+     * Calculates exchanges possibilities for 1 farmer(player) with 1 given stock, stores the result in a map.
      *
-     * @param actFarmer actual farmer(player) whose round it is
-     * @return Map containing all possible changes of the actual player
+     * @param actFarmer              actual farmer(player) whose round it is
+     * @param stockToProvideExchange the given stock to be checked for exchanges
+     * @return Map containing all possible changes of the actual player with given stock
      */
-    //TODO create actualPossibleChanges field in Farmer, move this method to Farmer
-    private Map<Animal, Map<Animal, Double>> getPossibleChanges(Farmer actFarmer, Map<Animal, Integer> stockToCheck) {
-        Map<Animal, Map<Animal, Double>> result = new LinkedHashMap<>();
-        Map<Animal, Integer> actStock = actFarmer.getFarmerLiveStock();
+    private Map<Animal, Map<Animal, Double>> getPossibleChanges(Farmer actFarmer, Map<Animal, Integer> stockToProvideExchange) {
+        actFarmer.clearActualPossibleChanges();
+        Map<Animal, Integer> actStock = actFarmer.getAnimalStock();
         for (Animal actAnimal : actStock.keySet()) {
-            Map<Animal, Double> actExchangeTable = actAnimal.changeableTo();
-            Map<Animal, Double> revisedExchangeTable = new HashMap<>();
-            for (Animal excAnimal : actExchangeTable.keySet()) {
-                double exchangeRate = actExchangeTable.get(excAnimal);
-                boolean available = checkAvailability(excAnimal, exchangeRate, stockToCheck);
-                if (available && (exchangeRate < 1.0 && actStock.get(actAnimal) >= 1 / exchangeRate || exchangeRate >= 1.0)) {
-                    revisedExchangeTable.put(excAnimal, exchangeRate);
+            if (actStock.get(actAnimal) >= 1) {
+                Map<Animal, Double> actExchangeTable = actAnimal.changeableTo();
+                Map<Animal, Double> revisedExchangeTable = new HashMap<>();
+                for (Animal excAnimal : actExchangeTable.keySet()) {
+                    double exchangeRate = actExchangeTable.get(excAnimal);
+                    boolean available = checkAvailability(excAnimal, exchangeRate, stockToProvideExchange);
+                    if (available && (exchangeRate < 1.0 && actStock.get(actAnimal) >= 1 / exchangeRate || exchangeRate >= 1.0)) {
+                        revisedExchangeTable.put(excAnimal, exchangeRate);
+                    }
                 }
+                actFarmer.setActualPossibleChanges(actAnimal, revisedExchangeTable);
             }
-            result.put(actAnimal, revisedExchangeTable);
         }
-        return result;
+        return actFarmer.getActualPossibleChanges();
     }
 
     /**
@@ -202,7 +204,6 @@ public class Game {
         }
     }
 
-    //TODO
     private void transactDiceRoll(Farmer actFarmer) {
         Animal result1 = actFarmer.rollDice(dice1);
         printDiceResult(result1);
@@ -223,7 +224,7 @@ public class Game {
      * @return integer value how many animal types the farmer has except for dogs
      */
     private boolean checkWin(Farmer actFarmer) {
-        Map<Animal, Integer> farmerAnimals = actFarmer.getFarmerLiveStock();
+        Map<Animal, Integer> farmerAnimals = actFarmer.getAnimalStock();
         int animalCounter = (int) farmerAnimals.keySet().stream()
                 .filter(key -> !key.equals(new SmallDog()) && !key.equals(new BigDog()) && farmerAnimals.get(key) >= 1).count();
         return animalCounter == 5;
