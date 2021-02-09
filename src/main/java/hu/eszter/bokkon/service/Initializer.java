@@ -15,14 +15,6 @@ public class Initializer {
         return new AnimalBaseStock();
     }
 
-    public static Fox createFox() {
-        return new Fox();
-    }
-
-    private static Wolf createWolf() {
-        return new Wolf();
-    }
-
     public static Die createDice(Animal a1, Animal a2, Animal a3) {
         List<Animal> diceSides = new ArrayList<>();
         diceSides.addAll(Stream.generate(Rabbit::new).limit(6).collect(Collectors.toList()));
