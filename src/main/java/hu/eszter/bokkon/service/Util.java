@@ -70,7 +70,7 @@ public class Util {
             int count = baseStock.get(actAnimal);
             printEntrySet(actName, count);
             for (int i = 0; i < allFarmers.size(); i++) {
-                Map<Animal, Integer> actMap = allFarmers.get(i).getFarmerLiveStock();
+                Map<Animal, Integer> actMap = allFarmers.get(i).getAnimalStock();
                 printEntrySet(actName, (actMap.get(actAnimal) == null ? 0 : actMap.get(actAnimal)));
                 if (i == allFarmers.size() - 1) {
                     System.out.println();

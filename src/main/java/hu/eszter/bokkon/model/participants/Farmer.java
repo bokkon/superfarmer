@@ -1,6 +1,6 @@
 package hu.eszter.bokkon.model.participants;
 
-import hu.eszter.bokkon.model.animal.Animal;
+import hu.eszter.bokkon.model.animal.*;
 
 import java.security.SecureRandom;
 import java.util.LinkedHashMap;
@@ -13,19 +13,27 @@ public class Farmer implements MoveAnimal {
 
     private final String name;
     private final SecureRandom random = new SecureRandom();
-    private Map<Animal, Integer> farmerLiveStock = new LinkedHashMap<>();
+    private Map<Animal, Integer> animalStock;
     private Map<Animal, Map<Animal, Double>> actualPossibleChanges = new LinkedHashMap<>();
 
     public Farmer(String name) {
         this.name = name;
+        this.animalStock = new LinkedHashMap<>();
+        animalStock.put(new Rabbit(), 0);
+        animalStock.put(new Sheep(), 0);
+        animalStock.put(new Pig(), 0);
+        animalStock.put(new Cow(), 0);
+        animalStock.put(new Horse(), 0);
+        animalStock.put(new SmallDog(), 0);
+        animalStock.put(new BigDog(), 0);
     }
 
     public String getName() {
         return name;
     }
 
-    public Map<Animal, Integer> getFarmerLiveStock() {
-        return farmerLiveStock;
+    public Map<Animal, Integer> getAnimalStock() {
+        return animalStock;
     }
 
     /**
@@ -38,8 +46,8 @@ public class Farmer implements MoveAnimal {
      */
     @Override
     public void addAnimals(Animal animal, int howMany) {
-        if (1 <= howMany) {
-            farmerLiveStock.merge(animal, howMany, (oldValue, newValue) -> oldValue + howMany);
+        if (howMany >= 1) {
+            animalStock.computeIfPresent(animal, (k, v) -> v + howMany);
         } else {
             System.out.println("No animal was added to " + name + "'s stock.");
         }
@@ -55,11 +63,8 @@ public class Farmer implements MoveAnimal {
      */
     @Override
     public void removeAnimals(Animal animal, int howMany) {
-        if (farmerLiveStock.get(animal) >= howMany) {
-            farmerLiveStock.computeIfPresent(animal, (k, v) -> v - howMany);
-            if (farmerLiveStock.get(animal) == 0) {
-                farmerLiveStock.remove(animal);
-            }
+        if (animalStock.get(animal) >= howMany) {
+            animalStock.computeIfPresent(animal, (k, v) -> v - howMany);
         }  else {
             System.out.println("No animal was removed from " + name + "'s stock.");
         }
@@ -70,4 +75,15 @@ public class Farmer implements MoveAnimal {
         return dice.getDiceSides().get(randomNo);
     }
 
+    public Map<Animal, Map<Animal, Double>> getActualPossibleChanges() {
+        return actualPossibleChanges;
+    }
+
+    public void setActualPossibleChanges(Animal animal, Map<Animal, Double> revisedExchangeTable) {
+        this.actualPossibleChanges.put(animal, revisedExchangeTable);
+    }
+
+    public void clearActualPossibleChanges() {
+        this.actualPossibleChanges.clear();
+    }
 }
