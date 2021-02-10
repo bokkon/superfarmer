@@ -14,7 +14,7 @@ public class Game {
     private AnimalBaseStock animalBaseStock;
     private final Die dice1;
     private final Die dice2;
-    private List<Farmer> farmers = new ArrayList<>();
+    private List<Farmer> farmers;
     private boolean thereIsAWinner = false;
     private final Scanner scan;
 
@@ -22,6 +22,7 @@ public class Game {
         this.animalBaseStock = Initializer.createAnimalStock();
         this.dice1 = Initializer.createDice(new Sheep(), new Cow(), new Wolf());
         this.dice2 = Initializer.createDice(new Pig(), new Horse(), new Fox());
+        this.farmers = new ArrayList<>();
         scan = new Scanner(System.in);
     }
 
@@ -33,9 +34,43 @@ public class Game {
         return animalBaseStock;
     }
 
-    //TODO get how many players and their names from user input 2-6 players
     public void init() {
-        this.farmers.addAll(Arrays.asList(Initializer.createPlayer("Jen"), Initializer.createPlayer("Bob")));
+        Util.startMessage();
+        System.out.println("");
+        System.out.println("WELCOME!");
+        System.out.println("");
+        int howManyPlayers = getHowManyPlayersInput();
+        for (int i = 0; i < howManyPlayers; i++) {
+            this.farmers.add(Initializer.createPlayer(getFarmerNameInput(i + 1)));
+        }
+        System.out.println("");
+        System.out.println("THE GAME BEGINS !!! \n");
+    }
+
+    private int getHowManyPlayersInput() {
+        System.out.println("Please choose how many players will participate: ");
+        String input;
+        do {
+            input = scan.next();
+            if ("q".equals(input.toLowerCase())) {
+                System.exit(0);
+            }
+        } while (!checkInputNumber(input, 2,6));
+        return Integer.parseInt(input);
+    }
+
+    private String getFarmerNameInput(int idx) {
+        String input;
+        do {
+            System.out.println("Please enter the " + idx + ".name: ");
+            input = scan.next();
+            if ("q".equals(input.toLowerCase())) {
+                System.exit(0);
+            }
+        } while (!input.matches("^[A-Za-z]*$"));
+        System.out.println("Thank you! You are about to play Super Farmer.");
+        System.out.println("");
+        return input;
     }
 
     /**
@@ -43,7 +78,6 @@ public class Game {
      */
     //TODO refactor when farmers will be able to exchange among each other
     public void run() {
-        Util.startMessage();
         Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
         while (!thereIsAWinner || animalBaseStock.isEmpty()) {
             doRound();
@@ -102,7 +136,7 @@ public class Game {
         System.out.println("Possible changes for " + actFarmer.getName() + ":\n");
         Util.printPossibleChangesMap(possExchanges);
         int countPossibilities = possExchanges.values().stream().mapToInt(Map::size).sum();
-        int selectedExchange = getExchangeSelectionInput(actFarmer, countPossibilities);
+        int selectedExchange = getExchangeSelectionInput(actFarmer, 0, countPossibilities);
         return executeExchange(actFarmer, possExchanges, selectedExchange) ?
                 "Exchange was successful!" : actFarmer.getName() + " decided not to exchange!";
     }
@@ -115,7 +149,7 @@ public class Game {
      * @param maxValue the number of maximum exchange possibilities, therefore the highest number to be able to choose
      * @return int value of the chosen exchange
      */
-    private int getExchangeSelectionInput(Farmer actFarmer, int maxValue) {
+    private int getExchangeSelectionInput(Farmer actFarmer, int minValue, int maxValue) {
         System.out.println(actFarmer.getName() + " please pick an exchange! ( 1 " + (maxValue == 1 ? "" : "to " + maxValue) + " ) Pick 0 if you don't wish to exchange.");
         String input;
         do {
@@ -123,7 +157,7 @@ public class Game {
             if ("q".equals(input.toLowerCase())) {
                 System.exit(0);
             }
-        } while (!checkInputNumber(input, maxValue));
+        } while (!checkInputNumber(input, minValue, maxValue));
         return Integer.parseInt(input);
     }
 
@@ -172,14 +206,14 @@ public class Game {
      * @param maxValue is the maximum value the input can have after converted into Integer
      * @return whether the input is valid
      */
-    private boolean checkInputNumber(String input, int maxValue) {
+    private boolean checkInputNumber(String input, int minValue, int maxValue) {
         if (input == null) {
             return false;
         }
         try {
             int number = Integer.parseInt(input);
-            if (number > maxValue || number < 0) {
-                System.out.println("Please choose a number between 0 and " + maxValue + "!");
+            if (number > maxValue || number < minValue) {
+                System.out.println("Please choose a number between " + minValue + " and " + maxValue + "!");
                 return false;
             }
         } catch (NumberFormatException nfe) {
@@ -192,7 +226,7 @@ public class Game {
     /**
      * Calculates exchanges possibilities for 1 farmer(player) with 1 given stock, stores the result in a map.
      *
-     * @param actFarmer              actual farmer(player) whose round it is
+     * @param actFarmer actual farmer(player) whose round it is
      * @param stockToProvideExchange the given stock to be checked for exchanges
      * @return Map containing all possible changes of the actual player with given stock
      */
@@ -228,6 +262,10 @@ public class Game {
      */
     private boolean checkAvailability(Animal animal, double exchangeRate, Map<Animal, Integer> stockToCheck) {
         return (exchangeRate < 1.0) ? stockToCheck.get(animal) >= 1 : stockToCheck.get(animal) >= exchangeRate;
+    }
+
+    private int checkHowManyAvailable(Animal animal, Map<Animal, Integer> stockToCheck) {
+        return stockToCheck.get(animal);
     }
 
     /**
