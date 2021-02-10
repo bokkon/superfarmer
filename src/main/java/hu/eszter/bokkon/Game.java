@@ -62,14 +62,15 @@ public class Game {
                 scan.close();
                 return;
             }
-//            transactDiceRoll(actFarmer);
-//            Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
-//            if (checkWin(actFarmer)) {
-//                thereIsAWinner = true;
-//                System.out.println("Congratulations! " + actFarmer.getName() + " are the Superfarmer!");
-//                scan.close();
-//                return;
-//            }
+            transactDiceRoll(actFarmer);
+            Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
+            if (checkWin(actFarmer)) {
+                thereIsAWinner = true;
+                System.out.println("Congratulations! " + actFarmer.getName() + " are the Superfarmer!");
+                scan.close();
+                return;
+            }
+            askToContinue();
         }
     }
 
@@ -181,9 +182,7 @@ public class Game {
                         revisedExchangeTable.put(excAnimal, exchangeRate);
                     }
                 }
-                actFarmer.setActualPossibleChanges(actAnimal, revisedExchangeTable);
             }
-        }
         return actFarmer.getActualPossibleChanges();
     }
 
@@ -209,7 +208,7 @@ public class Game {
         printDiceResult(result1);
         Animal result2 = actFarmer.rollDice(dice2);
         printDiceResult(result2);
-        evaluateDiceResult(result1, result2);
+        evaluateDiceResult(actFarmer, result1, result2);
     }
 
     //TODO
@@ -232,5 +231,20 @@ public class Game {
 
     private void printDiceResult(Animal result) {
         System.out.println("The result of the dice rolled is:  " + result.getClass().getSimpleName());
+    }
+
+    private void askToContinue() {
+        System.out.println("Shall we continue? (y/n)");
+        String input;
+        do {
+            input = scan.next();
+            if ("y".equals(input.toLowerCase())) {
+                continue;
+            } else if ("n".equals(input.toLowerCase())){
+                System.exit(0);
+            } else {
+                System.out.println("Please enter y or n!");
+            }
+        } while (!"y".equals(input.toLowerCase()));
     }
 }
