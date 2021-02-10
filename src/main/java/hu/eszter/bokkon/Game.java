@@ -297,13 +297,13 @@ public class Game {
         String input;
         do {
             input = scan.next();
-            if ("y".equals(input.toLowerCase())) {
-                continue;
-            } else if ("n".equals(input.toLowerCase())){
+            if ("n".equals(input.toLowerCase())) {
                 System.exit(0);
-            } else {
+            }
+            if (!"y".equals(input.toLowerCase())) {
                 System.out.println("Please enter y or n!");
             }
         } while (!"y".equals(input.toLowerCase()));
+        System.out.println("");
     }
 }
