@@ -171,15 +171,18 @@ public class Game {
     private Map<Animal, Map<Animal, Double>> getPossibleChanges(Farmer actFarmer, Map<Animal, Integer> stockToProvideExchange) {
         actFarmer.clearActualPossibleChanges();
         Map<Animal, Integer> actStock = actFarmer.getAnimalStock();
-        for (Animal actAnimal : actStock.keySet()) {
-            if (actStock.get(actAnimal) >= 1) {
-                Map<Animal, Double> actExchangeTable = actAnimal.changeableTo();
-                Map<Animal, Double> revisedExchangeTable = new HashMap<>();
-                for (Animal excAnimal : actExchangeTable.keySet()) {
-                    double exchangeRate = actExchangeTable.get(excAnimal);
-                    boolean available = checkAvailability(excAnimal, exchangeRate, stockToProvideExchange);
-                    if (available && (exchangeRate < 1.0 && actStock.get(actAnimal) >= 1 / exchangeRate || exchangeRate >= 1.0)) {
-                        revisedExchangeTable.put(excAnimal, exchangeRate);
+            for (Animal actAnimal : actStock.keySet()) {
+                if (actStock.get(actAnimal) >= 1) {
+                    Map<Animal, Double> actExchangeTable = actAnimal.changeableTo();
+                    Map<Animal, Double> revisedExchangeTable = new HashMap<>();
+                    for (Animal excAnimal : actExchangeTable.keySet()) {
+                        double exchangeRate = actExchangeTable.get(excAnimal);
+                        boolean available = checkAvailability(excAnimal, exchangeRate, stockToProvideExchange);
+                        if (available && (exchangeRate < 1.0 && actStock.get(actAnimal) >= 1 / exchangeRate || exchangeRate >= 1.0)) {
+                            revisedExchangeTable.put(excAnimal, exchangeRate);
+                        }
+                    } if (!revisedExchangeTable.isEmpty()) {
+                        actFarmer.setActualPossibleChanges(actAnimal, revisedExchangeTable);
                     }
                 }
             }
