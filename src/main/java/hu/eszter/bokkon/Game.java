@@ -135,7 +135,7 @@ public class Game {
      * @param numberOfSelected the selected exchange to process
      * @return boolean value whether the exchange took place or not
      */
-    //TODO refactor so that the stock to exchange with is a incoming parameter
+    //TODO refactor so that the stock to exchange with is an incoming parameter
     private boolean executeExchange(Farmer actFarmer, Map<Animal, Map<Animal, Double>> possibleExchanges, int numberOfSelected) {
         if (numberOfSelected == 0) {
             return false;
@@ -227,11 +227,7 @@ public class Game {
      * @return boolean value whether the animal is available in the stock
      */
     private boolean checkAvailability(Animal animal, double exchangeRate, Map<Animal, Integer> stockToCheck) {
-        if (exchangeRate < 1.0) {
-            return stockToCheck.get(animal) >= 1;
-        } else {
-            return stockToCheck.get(animal) >= exchangeRate;
-        }
+        return (exchangeRate < 1.0) ? stockToCheck.get(animal) >= 1 : stockToCheck.get(animal) >= exchangeRate;
     }
 
     /**
@@ -283,12 +279,15 @@ public class Game {
         if (oneDieResult.equals(fox) && actFarmer.getAnimalStock().get(smallDog) >= 1) {
             actFarmer.removeAnimals(smallDog, 1);
             animalBaseStock.addAnimals(smallDog, 1);
+            System.out.println("The fox has come! 1 small dog was taken from " + actFarmer.getName() + "'s stock.");
         } else if (oneDieResult.equals(fox) && actFarmer.getAnimalStock().get(smallDog) == 0 && actFarmer.getAnimalStock().get(rabbit) >= 1) {
             animalBaseStock.addAnimals(rabbit, actFarmer.getAnimalStock().get(rabbit));
             actFarmer.setOneAnimalCountToZero(rabbit);
+            System.out.println("The fox has come! All rabbits were taken from " + actFarmer.getName() + "'s stock.");
         } else if (oneDieResult.equals(wolf) && actFarmer.getAnimalStock().get(bigDog) >= 1) {
             actFarmer.removeAnimals(bigDog, 1);
             animalBaseStock.addAnimals(bigDog, 1);
+            System.out.println("The wolf has come! 1 big dog was taken from " + actFarmer.getName() + "'s stock.");
         } else if (oneDieResult.equals(wolf) && actFarmer.getAnimalStock().get(bigDog) == 0) {
             returnAllAnimalsExceptHorsesAndSmallDogs(actFarmer);
         } else if (!oneDieResult.equals(fox) && !oneDieResult.equals(wolf)) {
@@ -311,6 +310,7 @@ public class Game {
                 }
             }
         }
+        System.out.println("The wolf has come! Your farm is devastated. Keep a big dog!");
         actFarmer.setAnimalsCountToZero();
     }
 
