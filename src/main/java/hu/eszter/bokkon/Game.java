@@ -262,6 +262,17 @@ public class Game {
         actFarmer.setAnimalsCountToZero();
     }
 
+    public void receiveAnimalsBy1Die(Farmer actFarmer, Animal dieResult) {
+        int howManyBase = animalBaseStock.getLiveStock().get(dieResult);
+        int howManyFarmer = actFarmer.getAnimalStock().get(dieResult);
+        int actHowMany = Math.min(howManyBase, ((howManyFarmer + 1) / 2));
+        if (actHowMany >= 1) {
+            actFarmer.addAnimals(dieResult, actHowMany);
+            animalBaseStock.removeAnimals(dieResult, actHowMany);
+        }
+        System.out.println(actFarmer.getName() + " received " + actHowMany + " " + dieResult.getClass().getSimpleName() + (actHowMany > 1 ? "s" : "") + " from the base stock.");
+    }
+
     /**
      * Checks if the actual farmer(player) whose round it is, whether or no has 5 different type of animals
      * which are not dogs.
