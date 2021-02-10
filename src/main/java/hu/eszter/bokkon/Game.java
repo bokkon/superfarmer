@@ -41,7 +41,7 @@ public class Game {
     public void run() {
         Util.startMessage();
         Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
-        while (!thereIsAWinner) {
+        while (!thereIsAWinner || animalBaseStock.isEmpty()) {
             doRound();
             if (animalBaseStock.getLiveStock().values().stream().mapToInt(v -> v).sum() == 0) {
                 System.out.println("Main stock is empty!");
