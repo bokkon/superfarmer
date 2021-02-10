@@ -70,6 +70,19 @@ public class Farmer implements MoveAnimal {
         }
     }
 
+    public void setOneAnimalCountToZero(Animal animalToSetZero) {
+        animalStock.put(animalToSetZero, 0);
+    }
+
+    public void setAnimalsCountToZero() {
+        setOneAnimalCountToZero(new Rabbit());
+        setOneAnimalCountToZero(new Sheep());
+        setOneAnimalCountToZero(new Pig());
+        setOneAnimalCountToZero(new Cow());
+        setOneAnimalCountToZero(new BigDog());
+
+    }
+
     public Animal rollDice(Die dice) {
         int randomNo = random.nextInt(12);
         return dice.getDiceSides().get(randomNo);
