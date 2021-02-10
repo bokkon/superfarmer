@@ -38,6 +38,10 @@ public class Game {
         this.farmers.addAll(Arrays.asList(Initializer.createPlayer("Jen"), Initializer.createPlayer("Bob")));
     }
 
+    /**
+     * Start game.
+     */
+    //TODO refactor when farmers will be able to exchange among each other
     public void run() {
         Util.startMessage();
         Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
@@ -50,6 +54,9 @@ public class Game {
         }
     }
 
+    /**
+     * Run 1 round of the game, going through all farmers(players) once.
+     */
     private void doRound() {
         for (Farmer actFarmer : farmers) {
             displayActualFarmersName(actFarmer);
@@ -80,6 +87,12 @@ public class Game {
     }
 
 
+    /**
+     * Processes the exchange for 1 farmer in 1 round.
+     *
+     * @param actFarmer is the farmer whose round is
+     * @return String value containing whether the exchange took place.
+     */
     //TODO refactor so that exchange can be possible between any farmers(players) too
     private String transactExchange(Farmer actFarmer) {
         Map<Animal, Map<Animal, Double>> possExchanges = getPossibleChanges(actFarmer, animalBaseStock.getLiveStock());
@@ -95,6 +108,13 @@ public class Game {
     }
 
 
+    /**
+     * Asks input from the actual player which exchange to process
+     *
+     * @param actFarmer is the farmer or actual player whose round is
+     * @param maxValue the number of maximum exchange possibilities, therefore the highest number to be able to choose
+     * @return int value of the chosen exchange
+     */
     private int getExchangeSelectionInput(Farmer actFarmer, int maxValue) {
         System.out.println(actFarmer.getName() + " please pick an exchange! ( 1 " + (maxValue == 1 ? "" : "to " + maxValue) + " ) Pick 0 if you don't wish to exchange.");
         String input;
@@ -107,6 +127,15 @@ public class Game {
         return Integer.parseInt(input);
     }
 
+    /**
+     * Executes certain change. What it removes from 1 stock, it adds to the other.
+     *
+     * @param actFarmer is the farmer or actual player whose round is
+     * @param possibleExchanges a map containing all exchange possibilities for 1 farmer in 1 round with base stock
+     * @param numberOfSelected the selected exchange to process
+     * @return boolean value whether the exchange took place or not
+     */
+    //TODO refactor so that the stock to exchange with is a incoming parameter
     private boolean executeExchange(Farmer actFarmer, Map<Animal, Map<Animal, Double>> possibleExchanges, int numberOfSelected) {
         if (numberOfSelected == 0) {
             return false;
@@ -136,9 +165,8 @@ public class Game {
         return false;
     }
 
-
     /**
-     * Checks the input required from the player.
+     * Validates the input required from the farmer(actual player)
      *
      * @param input    an input received from the player in String format
      * @param maxValue is the maximum value the input can have after converted into Integer
@@ -190,7 +218,7 @@ public class Game {
     }
 
     /**
-     * Checks availability of the given number of given animal in the given stock.
+     * Checks the availability of a given animal in the given stock.
      *
      * @param animal       type of animal whose availabilty is to be checked
      * @param exchangeRate exchangeRate of animal referring to the number of animals to be checked
@@ -206,6 +234,11 @@ public class Game {
         }
     }
 
+    /**
+     * Processes the roll of 2 dice, and executes the consequent changes.
+     *
+     * @param actFarmer the farmer(actual player) whose round it is
+     */
     private void transactDiceRoll(Farmer actFarmer) {
         Animal result1 = actFarmer.rollDice(dice1);
         printDiceResult(result1);
@@ -214,6 +247,13 @@ public class Game {
         evaluateDiceResult(actFarmer, result1, result2);
     }
 
+    /**
+     * Analyses the dice results. Examines whether the results of the 2 dice match and acts accordingly.
+     *
+     * @param actFarmer the farmer(actual player) whose round it is
+     * @param dieResult1 result of Die I.
+     * @param dieResult2 result of Die II.
+     */
     private void evaluateDiceResult(Farmer actFarmer, Animal dieResult1, Animal dieResult2) {
         if (dieResult1.equals(dieResult2)) {
             int howMany1Base = animalBaseStock.getLiveStock().get(dieResult1);
@@ -228,6 +268,12 @@ public class Game {
         }
     }
 
+    /**
+     * Processes the result of 1 die individually.
+     *
+     * @param actFarmer the farmer(actual player) whose round it is
+     * @param oneDieResult result of 1 die
+     */
     private void check1Die(Farmer actFarmer, Animal oneDieResult) {
         Animal fox = new Fox();
         Animal smallDog = new SmallDog();
@@ -250,6 +296,11 @@ public class Game {
         }
     }
 
+    /**
+     * Processes the return of all animals from the stock of the actual player except for horses and small dogs.
+     *
+     * @param actFarmer the farmer(actual player) whose round it is
+     */
     private void returnAllAnimalsExceptHorsesAndSmallDogs(Farmer actFarmer) {
         Animal horse = new Horse();
         Animal smallDog = new SmallDog();
@@ -263,6 +314,12 @@ public class Game {
         actFarmer.setAnimalsCountToZero();
     }
 
+    /**
+     * Executes the receipt of animals according to the result of 1 die.
+     *
+     * @param actFarmer the farmer(actual player) whose round it is
+     * @param dieResult result of 1 die
+     */
     private void receiveAnimalsBy1Die(Farmer actFarmer, Animal dieResult) {
         int howManyBase = animalBaseStock.getLiveStock().get(dieResult);
         int howManyFarmer = actFarmer.getAnimalStock().get(dieResult);
