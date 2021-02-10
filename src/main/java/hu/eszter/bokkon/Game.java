@@ -262,7 +262,7 @@ public class Game {
         actFarmer.setAnimalsCountToZero();
     }
 
-    public void receiveAnimalsBy1Die(Farmer actFarmer, Animal dieResult) {
+    private void receiveAnimalsBy1Die(Farmer actFarmer, Animal dieResult) {
         int howManyBase = animalBaseStock.getLiveStock().get(dieResult);
         int howManyFarmer = actFarmer.getAnimalStock().get(dieResult);
         int actHowMany = Math.min(howManyBase, ((howManyFarmer + 1) / 2));
