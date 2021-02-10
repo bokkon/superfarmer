@@ -10,5 +10,4 @@ public interface Animal {
      * animals can be exchanged to 1.
      */
     Map<Animal, Double> changeableTo();
-
 }

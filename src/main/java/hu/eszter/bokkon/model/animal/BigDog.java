@@ -3,7 +3,7 @@ package hu.eszter.bokkon.model.animal;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class BigDog implements ProtectorAnimal {
+public final class BigDog implements Animal {
 
     private final int id;
 
@@ -16,11 +16,6 @@ public final class BigDog implements ProtectorAnimal {
         Map<Animal, Double> result = new HashMap<>();
         result.put(new Cow(), 1.0);
         return result;
-    }
-
-    @Override
-    public void protect() {
-
     }
 
     @Override
