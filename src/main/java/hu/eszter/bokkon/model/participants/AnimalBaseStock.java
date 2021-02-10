@@ -11,10 +11,8 @@ import java.util.Map;
 public class AnimalBaseStock implements MoveAnimal {
 
     private Map<Animal, Integer> liveStock = new LinkedHashMap<>();
-    private int animalCount;
 
     public AnimalBaseStock() {
-        animalCount = 128;
         liveStock.put(new Rabbit(), 60);
         liveStock.put(new Sheep(), 24);
         liveStock.put(new Pig(), 20);
@@ -26,14 +24,6 @@ public class AnimalBaseStock implements MoveAnimal {
 
     public Map<Animal, Integer> getLiveStock() {
         return liveStock;
-    }
-
-    public int getAnimalCount() {
-        return animalCount;
-    }
-
-    public void setAnimalCount(int animalCount) {
-        this.animalCount = animalCount;
     }
 
     /**
@@ -49,7 +39,7 @@ public class AnimalBaseStock implements MoveAnimal {
         if (howMany >= 1) {
             liveStock.computeIfPresent(animal, (k, v) -> v + howMany);
         } else {
-            System.out.println("No animal was added to the stock.");
+            System.out.println("No animal was added to the base stock.");
         }
     }
 
@@ -66,8 +56,8 @@ public class AnimalBaseStock implements MoveAnimal {
         if (liveStock.get(animal) >= howMany) {
             liveStock.computeIfPresent(animal, (k, v) -> v - howMany);
         } else {
-            System.out.println("No animal was removed from the stock.");
+            System.out.println("No animal was removed from the base stock.");
         }
 
-}
+    }
 }
