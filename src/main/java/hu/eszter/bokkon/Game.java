@@ -254,9 +254,10 @@ public class Game {
         Animal horse = new Horse();
         Animal smallDog = new SmallDog();
         for (Animal actAnimal : actFarmer.getAnimalStock().keySet()) {
-            if ((0 < actFarmer.getAnimalStock().get(actAnimal)) && !actAnimal.equals(horse) || !actAnimal.equals(smallDog)) {
-                System.out.println("WHY " + actFarmer.getAnimalStock().get(actAnimal));
-                animalBaseStock.addAnimals(actAnimal, actFarmer.getAnimalStock().get(actAnimal));
+            if (!actAnimal.equals(horse) || !actAnimal.equals(smallDog)) {
+                if ( actFarmer.getAnimalStock().get(actAnimal) != 0 ) {
+                    animalBaseStock.addAnimals(actAnimal, actFarmer.getAnimalStock().get(actAnimal));
+                }
             }
         }
         actFarmer.setAnimalsCountToZero();
@@ -270,7 +271,7 @@ public class Game {
             actFarmer.addAnimals(dieResult, actHowMany);
             animalBaseStock.removeAnimals(dieResult, actHowMany);
         }
-        System.out.println(actFarmer.getName() + " received " + actHowMany + " " + dieResult.getClass().getSimpleName() + (actHowMany > 1 ? "s" : "") + " from the base stock.");
+        System.out.println(actFarmer.getName() + " received " + actHowMany + " " + dieResult.getClass().getSimpleName() + (actHowMany == 0 || actHowMany > 1 ? "s" : "") + " from the base stock.");
     }
 
     /**
