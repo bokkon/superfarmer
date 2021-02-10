@@ -84,7 +84,7 @@ public class Game {
     private String transactExchange(Farmer actFarmer) {
         Map<Animal, Map<Animal, Double>> possExchanges = getPossibleChanges(actFarmer, animalBaseStock.getLiveStock());
         if (possExchanges.size() == 0) {
-            return "There are no possible exchanges for " + actFarmer.getName() + "!";
+            return "There are no possible exchanges for " + actFarmer.getName() + " !";
         }
         System.out.println("Possible changes for " + actFarmer.getName() + ":\n");
         Util.printPossibleChangesMap(possExchanges);
@@ -96,7 +96,7 @@ public class Game {
 
 
     private int getExchangeSelectionInput(Farmer actFarmer, int maxValue) {
-        System.out.println(actFarmer.getName() + " please pick an exchange! (1 to " + maxValue + ") Pick 0 if you don't wish to exchange.");
+        System.out.println(actFarmer.getName() + " please pick an exchange! ( 1 " + (maxValue == 1 ? "" : "to " + maxValue) + " ) Pick 0 if you don't wish to exchange.");
         String input;
         do {
             input = scan.next();
