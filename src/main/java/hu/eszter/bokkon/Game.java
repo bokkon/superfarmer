@@ -214,8 +214,52 @@ public class Game {
         evaluateDiceResult(actFarmer, result1, result2);
     }
 
-    //TODO
-    private void evaluateDiceResult(Animal result1, Animal result2) {
+    private void evaluateDiceResult(Farmer actFarmer, Animal dieResult1, Animal dieResult2) {
+        if (dieResult1.equals(dieResult2)) {
+            int howMany1Base = animalBaseStock.getLiveStock().get(dieResult1);
+            int howMany1Farmer = actFarmer.getAnimalStock().get(dieResult1);
+            int actHowMany = Math.min(howMany1Base, (howMany1Farmer + 2) / 2);
+            actFarmer.addAnimals(dieResult1, actHowMany);
+            animalBaseStock.removeAnimals(dieResult1, actHowMany);
+            System.out.println(actFarmer.getName() + " received " + actHowMany + " " + dieResult1.getClass().getSimpleName() + (actHowMany > 1 ? "s" : "") + " from the base stock.");
+        } else {
+            check1Die(actFarmer, dieResult1);
+            check1Die(actFarmer, dieResult2);
+        }
+    }
+
+    private void check1Die(Farmer actFarmer, Animal oneDieResult) {
+        Animal fox = new Fox();
+        Animal smallDog = new SmallDog();
+        Animal wolf = new Wolf();
+        Animal bigDog = new BigDog();
+        Animal rabbit = new Rabbit();
+        if (oneDieResult.equals(fox) && actFarmer.getAnimalStock().get(smallDog) >= 1) {
+            actFarmer.removeAnimals(smallDog, 1);
+            animalBaseStock.addAnimals(smallDog, 1);
+        } else if (oneDieResult.equals(fox) && actFarmer.getAnimalStock().get(smallDog) == 0 && actFarmer.getAnimalStock().get(rabbit) >= 1) {
+            animalBaseStock.addAnimals(rabbit, actFarmer.getAnimalStock().get(rabbit));
+            actFarmer.setOneAnimalCountToZero(rabbit);
+        } else if (oneDieResult.equals(wolf) && actFarmer.getAnimalStock().get(bigDog) >= 1) {
+            actFarmer.removeAnimals(bigDog, 1);
+            animalBaseStock.addAnimals(bigDog, 1);
+        } else if (oneDieResult.equals(wolf) && actFarmer.getAnimalStock().get(bigDog) == 0) {
+            returnAllAnimalsExceptHorsesAndSmallDogs(actFarmer);
+        } else if (!oneDieResult.equals(fox) && !oneDieResult.equals(wolf)) {
+            receiveAnimalsBy1Die(actFarmer, oneDieResult);
+        }
+    }
+
+    private void returnAllAnimalsExceptHorsesAndSmallDogs(Farmer actFarmer) {
+        Animal horse = new Horse();
+        Animal smallDog = new SmallDog();
+        for (Animal actAnimal : actFarmer.getAnimalStock().keySet()) {
+            if ((0 < actFarmer.getAnimalStock().get(actAnimal)) && !actAnimal.equals(horse) || !actAnimal.equals(smallDog)) {
+                System.out.println("WHY " + actFarmer.getAnimalStock().get(actAnimal));
+                animalBaseStock.addAnimals(actAnimal, actFarmer.getAnimalStock().get(actAnimal));
+            }
+        }
+        actFarmer.setAnimalsCountToZero();
     }
 
     /**
