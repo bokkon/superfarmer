@@ -15,6 +15,21 @@ public class Util {
     private static final String ANSI_BG_PURPLE = "\u001B[45m";
     private static final String ANSI_BG_CYAN   = "\u001B[46m";
     private static final String ANSI_BRIGHT_BLACK = "\u001B[97m";
+    private static final String ANSI_BRIGHT_RED    = "\u001B[91m";
+    private static final String ANSI_BRIGHT_GREEN  = "\u001B[92m";
+
+    public static String getReturnColour() {
+        return RETURN_COLOUR;
+    }
+
+    public static String getAnsiBrightRed() {
+        return ANSI_BRIGHT_RED;
+    }
+
+    public static String getAnsiBrightGreen() {
+        return ANSI_BRIGHT_GREEN;
+    }
+
     /**
      * Displays all the possible exchanges between 2 stocks: the actual farmer's animal stock and another animal stock.
      *
@@ -46,8 +61,8 @@ public class Util {
      */
     public static void displayAllStocks(Map<Animal, Integer> baseStock, List<Farmer> allFarmers) {
         System.out.println();
-        System.out.print(ANSI_BG_CYAN + ANSI_BRIGHT_BLACK + " Base Stock" + getSpaces(14, 0));
-        allFarmers.forEach( f -> System.out.print(" " + f.getName() + getSpaces(24, f.getName().length())));
+        System.out.print(ANSI_BG_CYAN + ANSI_BRIGHT_BLACK + " Base Stock" + getSpaces(13, 0));
+        allFarmers.forEach( f -> System.out.print(" " + f.getName() + getSpaces(23, f.getName().length())));
         System.out.println();
         System.out.println(String.join("", Collections.nCopies(24*(allFarmers.size()+1)-10, "-")));
         for (Animal actAnimal: baseStock.keySet()) {
@@ -55,7 +70,7 @@ public class Util {
             int count = baseStock.get(actAnimal);
             printEntrySet(actName, count);
             for (int i = 0; i < allFarmers.size(); i++) {
-                Map<Animal, Integer> actMap = allFarmers.get(i).getFarmerLiveStock();
+                Map<Animal, Integer> actMap = allFarmers.get(i).getAnimalStock();
                 printEntrySet(actName, (actMap.get(actAnimal) == null ? 0 : actMap.get(actAnimal)));
                 if (i == allFarmers.size() - 1) {
                     System.out.println();
@@ -68,7 +83,7 @@ public class Util {
 
     private static void printEntrySet(String name, int count) {
         System.out.print(" " + name + getSpaces(9,name.length()) + ": "
-                + (String.valueOf(count).length() == 1 ? " " : "") + count + getSpaces(11,0));
+                + (String.valueOf(count).length() == 1 ? " " : "") + count + getSpaces(10,0));
     }
 
 
