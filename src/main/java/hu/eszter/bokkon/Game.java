@@ -67,7 +67,13 @@ public class Game {
             if ("q".equals(input.toLowerCase())) {
                 System.exit(0);
             }
-        } while (!input.matches("^[A-Za-z]*$"));
+            if (!input.matches("^[A-Za-z]*$")) {
+                System.out.println("Please use letters only!");
+            }
+            if (input.length() > 20) {
+                System.out.println("Please choose a shortest name! (Maximum 20 characters)");
+            }
+        } while (!(input.matches("^[A-Za-z]*$") && 20 >= input.length()));
         System.out.println("Thank you! You are about to play Super Farmer.");
         System.out.println("");
         return input;
@@ -76,13 +82,14 @@ public class Game {
     /**
      * Start game.
      */
-    //TODO refactor when farmers will be able to exchange among each other
+    //TODO refactor when farmers will be able to exchange among each other, empty main stock will not be a condiition to
+    // end the game
     public void run() {
         Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
         while (!thereIsAWinner || animalBaseStock.isEmpty()) {
             doRound();
             if (animalBaseStock.getLiveStock().values().stream().mapToInt(v -> v).sum() == 0) {
-                System.out.println("Main stock is empty!");
+                System.out.println("Main stock is empty! The game is over! No one became the super farmer.");
                 return;
             }
         }
@@ -206,10 +213,8 @@ public class Game {
      * @param maxValue is the maximum value the input can have after converted into Integer
      * @return whether the input is valid
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean checkInputNumber(String input, int minValue, int maxValue) {
-        if (input == null) {
-            return false;
-        }
         try {
             int number = Integer.parseInt(input);
             if (number > maxValue || number < minValue) {
