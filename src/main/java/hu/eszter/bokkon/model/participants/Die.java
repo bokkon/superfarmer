@@ -2,12 +2,13 @@ package hu.eszter.bokkon.model.participants;
 
 import hu.eszter.bokkon.model.animal.Animal;
 
-import java.util.Collections;
+import java.security.SecureRandom;
 import java.util.List;
 
 public class Die {
 
     private final List<Animal> diceSides;
+    private final SecureRandom random = new SecureRandom();
 
     public Die(List<Animal> diceSides) {
         if (diceSides.size() != 12) {
@@ -16,7 +17,8 @@ public class Die {
         this.diceSides = diceSides;
     }
 
-    public List<Animal> getDiceSides() {
-        return Collections.unmodifiableList(diceSides);
+    public Animal getRandomSide() {
+        int randomNo = random.nextInt(12);
+        return diceSides.get(randomNo);
     }
 }
