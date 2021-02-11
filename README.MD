@@ -1,6 +1,7 @@
  Implement Super farmer board game logic in Java.
 
- SUPER FARMER board game:
+ /Source: https://world-of-board-games.com.sg/docs/Super-Farmer.pdf/
+ The original SUPER FARMER board game rules:
 
  A family game for 2 to 6 players in age 7 or more 
 
