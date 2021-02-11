@@ -2,7 +2,9 @@ package hu.eszter.bokkon.model.participants;
 
 import hu.eszter.bokkon.model.animal.Animal;
 
-public interface MoveAnimal {
+import java.util.Map;
+
+public interface StockOrganizer {
 
     /**
      * Adds given number of the same type of animal to an animal stock
@@ -17,4 +19,6 @@ public interface MoveAnimal {
      * @param howMany number of the same type of animal to be removed
      */
     void removeAnimals(Animal animal, int howMany);
+
+    Map<Animal, Integer> getAnimalStock();
 }
