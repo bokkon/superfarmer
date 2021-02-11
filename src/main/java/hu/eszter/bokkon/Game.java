@@ -176,7 +176,6 @@ public class Game {
      * @param numberOfSelected the selected exchange to process
      * @return boolean value whether the exchange took place or not
      */
-    //TODO refactor so that the stock to exchange with is an incoming parameter
     private boolean executeExchange(Farmer actFarmer, Map<Animal, Map<Animal, Double>> possibleExchanges, int numberOfSelected) {
         if (numberOfSelected == 0) {
             return false;
@@ -237,19 +236,23 @@ public class Game {
      */
     private Map<Animal, Map<Animal, Double>> getPossibleChanges(Farmer actFarmer, Map<Animal, Integer> stockToProvideExchange) {
         actFarmer.clearActualPossibleChanges();
-        Map<Animal, Integer> actStock = actFarmer.getAnimalStock();
-            for (Animal actAnimal : actStock.keySet()) {
-                if (actStock.get(actAnimal) >= 1) {
-                    Map<Animal, Double> actExchangeTable = actAnimal.changeableTo();
+        Map<Animal, Integer> actFarmerStock = actFarmer.getAnimalStock();
+            for (Animal actFarmerAnimal : actFarmerStock.keySet()) {
+                if (actFarmerStock.get(actFarmerAnimal) >= 1) {
+                    Map<Animal, Double> actExchangeTable = actFarmerAnimal.changeableTo();
                     Map<Animal, Double> revisedExchangeTable = new HashMap<>();
-                    for (Animal excAnimal : actExchangeTable.keySet()) {
-                        double exchangeRate = actExchangeTable.get(excAnimal);
-                        boolean available = checkAvailability(excAnimal, exchangeRate, stockToProvideExchange);
-                        if (available && (exchangeRate < 1.0 && actStock.get(actAnimal) >= 1 / exchangeRate || exchangeRate >= 1.0)) {
-                            revisedExchangeTable.put(excAnimal, exchangeRate);
+                    for (Animal exchangeAnimal : actExchangeTable.keySet()) {
+                        double exchangeRate = actExchangeTable.get(exchangeAnimal);
+                        boolean available = checkAvailability(exchangeAnimal, exchangeRate, stockToProvideExchange);
+                        if (available && (exchangeRate < 1.0 && actFarmerStock.get(actFarmerAnimal) >= 1 / exchangeRate || exchangeRate >= 1.0)) {
+                            revisedExchangeTable.put(exchangeAnimal, exchangeRate);
+                        }
+                        //if there are fewer animals in the base stock to provide according to the exchange rates, but there still are
+                        if (!available && stockToProvideExchange.get(exchangeAnimal) >= 1) {
+                            revisedExchangeTable.put(exchangeAnimal, (double)stockToProvideExchange.get(exchangeAnimal));
                         }
                     } if (!revisedExchangeTable.isEmpty()) {
-                        actFarmer.setActualPossibleChanges(actAnimal, revisedExchangeTable);
+                        actFarmer.setActualPossibleChanges(actFarmerAnimal, revisedExchangeTable);
                     }
                 }
             }
@@ -267,10 +270,6 @@ public class Game {
      */
     private boolean checkAvailability(Animal animal, double exchangeRate, Map<Animal, Integer> stockToCheck) {
         return (exchangeRate < 1.0) ? stockToCheck.get(animal) >= 1 : stockToCheck.get(animal) >= exchangeRate;
-    }
-
-    private int checkHowManyAvailable(Animal animal, Map<Animal, Integer> stockToCheck) {
-        return stockToCheck.get(animal);
     }
 
     /**
