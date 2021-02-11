@@ -48,7 +48,7 @@ public class Game {
     }
 
     private int getHowManyPlayersInput() {
-        System.out.println("Please choose how many players will participate: ");
+        System.out.println("Please choose how many players will participate! ( 2 to 6 ) ");
         String input;
         do {
             input = scan.next();
@@ -85,10 +85,10 @@ public class Game {
     //TODO refactor when farmers will be able to exchange among each other, empty main stock will not be a condiition to
     // end the game
     public void run() {
-        Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
+        Util.displayAllStocks(animalBaseStock.getAnimalStock(), farmers);
         while (!thereIsAWinner || animalBaseStock.isEmpty()) {
             doRound();
-            if (animalBaseStock.getLiveStock().values().stream().mapToInt(v -> v).sum() == 0) {
+            if (animalBaseStock.getAnimalStock().values().stream().mapToInt(v -> v).sum() == 0) {
                 System.out.println("Main stock is empty! The game is over! No one became the super farmer.");
                 return;
             }
@@ -102,7 +102,7 @@ public class Game {
         for (Farmer actFarmer : farmers) {
             displayActualFarmersName(actFarmer);
             System.out.println(transactExchange(actFarmer));
-            Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
+            Util.displayAllStocks(animalBaseStock.getAnimalStock(), farmers);
             if (checkWin(actFarmer)) {
                 thereIsAWinner = true;
                 System.out.println("Congratulations! ".toUpperCase() + Util.getAnsiBrightRed() + actFarmer.getName() + Util.getReturnColour()
@@ -111,7 +111,7 @@ public class Game {
                 return;
             }
             transactDiceRoll(actFarmer);
-            Util.displayAllStocks(animalBaseStock.getLiveStock(), farmers);
+            Util.displayAllStocks(animalBaseStock.getAnimalStock(), farmers);
             if (checkWin(actFarmer)) {
                 thereIsAWinner = true;
                 System.out.println("Congratulations! " + actFarmer.getName() + " are the Superfarmer!");
@@ -136,7 +136,7 @@ public class Game {
      */
     //TODO refactor so that exchange can be possible between any farmers(players) too
     private String transactExchange(Farmer actFarmer) {
-        Map<Animal, Map<Animal, Double>> possExchanges = getPossibleChanges(actFarmer, animalBaseStock.getLiveStock());
+        Map<Animal, Map<Animal, Double>> possExchanges = getPossibleChanges(actFarmer, animalBaseStock.getAnimalStock());
         if (possExchanges.size() == 0) {
             return "There are no possible exchanges for " + actFarmer.getName() + " !";
         }
@@ -295,7 +295,7 @@ public class Game {
      */
     private void evaluateDiceResult(Farmer actFarmer, Animal dieResult1, Animal dieResult2) {
         if (dieResult1.equals(dieResult2)) {
-            int howMany1Base = animalBaseStock.getLiveStock().get(dieResult1);
+            int howMany1Base = animalBaseStock.getAnimalStock().get(dieResult1);
             int howMany1Farmer = actFarmer.getAnimalStock().get(dieResult1);
             int actHowMany = Math.min(howMany1Base, (howMany1Farmer + 2) / 2);
             actFarmer.addAnimals(dieResult1, actHowMany);
@@ -364,7 +364,7 @@ public class Game {
      * @param dieResult result of 1 die
      */
     private void receiveAnimalsBy1Die(Farmer actFarmer, Animal dieResult) {
-        int howManyBase = animalBaseStock.getLiveStock().get(dieResult);
+        int howManyBase = animalBaseStock.getAnimalStock().get(dieResult);
         int howManyFarmer = actFarmer.getAnimalStock().get(dieResult);
         int actHowMany = Math.min(howManyBase, ((howManyFarmer + 1) / 2));
         if (actHowMany >= 1) {
