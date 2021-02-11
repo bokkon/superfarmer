@@ -61,8 +61,8 @@ public class Util {
      */
     public static void displayAllStocks(Map<Animal, Integer> baseStock, List<Farmer> allFarmers) {
         System.out.println();
-        System.out.print(ANSI_BG_CYAN + ANSI_BRIGHT_BLACK + " Base Stock" + getSpaces(14, 0));
-        allFarmers.forEach( f -> System.out.print(" " + f.getName() + getSpaces(24, f.getName().length())));
+        System.out.print(ANSI_BG_CYAN + ANSI_BRIGHT_BLACK + " Base Stock" + getSpaces(13, 0));
+        allFarmers.forEach( f -> System.out.print(" " + f.getName() + getSpaces(23, f.getName().length())));
         System.out.println();
         System.out.println(String.join("", Collections.nCopies(24*(allFarmers.size()+1)-10, "-")));
         for (Animal actAnimal: baseStock.keySet()) {
@@ -83,7 +83,7 @@ public class Util {
 
     private static void printEntrySet(String name, int count) {
         System.out.print(" " + name + getSpaces(9,name.length()) + ": "
-                + (String.valueOf(count).length() == 1 ? " " : "") + count + getSpaces(11,0));
+                + (String.valueOf(count).length() == 1 ? " " : "") + count + getSpaces(10,0));
     }
 
 
