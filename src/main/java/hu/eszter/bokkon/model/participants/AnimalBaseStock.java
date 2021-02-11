@@ -62,7 +62,7 @@ public class AnimalBaseStock implements MoveAnimal {
     }
 
     public boolean isEmpty() {
-        for (Integer value: liveStock.values()) {
+        for (int value: liveStock.values()) {
             if (value != 0) {
                 return false;
             }
