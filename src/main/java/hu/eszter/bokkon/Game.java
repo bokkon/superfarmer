@@ -2,7 +2,7 @@ package hu.eszter.bokkon;
 
 import hu.eszter.bokkon.model.animal.*;
 import hu.eszter.bokkon.model.participants.Farmer;
-import hu.eszter.bokkon.model.participants.StockOrganizer;
+import hu.eszter.bokkon.model.participants.StockProvider;
 import hu.eszter.bokkon.service.DiceRollService;
 import hu.eszter.bokkon.service.ExchangeService;
 import hu.eszter.bokkon.service.Initializer;
@@ -12,7 +12,7 @@ import java.util.*;
 
 public class Game {
 
-    private StockOrganizer animalBaseStock;
+    private StockProvider animalBaseStock;
     private List<Farmer> farmers;
     private boolean thereIsAWinner = false;
     private final Scanner scan;

@@ -3,7 +3,7 @@ package hu.eszter.bokkon.service;
 import hu.eszter.bokkon.model.animal.*;
 import hu.eszter.bokkon.model.participants.Die;
 import hu.eszter.bokkon.model.participants.Farmer;
-import hu.eszter.bokkon.model.participants.StockOrganizer;
+import hu.eszter.bokkon.model.participants.StockProvider;
 
 import java.util.Map;
 
@@ -17,7 +17,7 @@ public class DiceRollService {
         this.dice2 = Initializer.createDice(new Pig(), new Horse(), new Fox());
     }
 
-    public void transactDiceRoll(Farmer actFarmer, StockOrganizer animalBaseStock) {
+    public void transactDiceRoll(Farmer actFarmer, StockProvider animalBaseStock) {
         Animal result1 = actFarmer.rollDice(dice1);
         printDiceResult(result1);
         Animal result2 = actFarmer.rollDice(dice2);
@@ -32,7 +32,7 @@ public class DiceRollService {
      * @param dieResult1 result of Die I.
      * @param dieResult2 result of Die II.
      */
-    private void evaluateDiceResult(Farmer actFarmer, Animal dieResult1, Animal dieResult2, StockOrganizer animalBaseStock) {
+    private void evaluateDiceResult(Farmer actFarmer, Animal dieResult1, Animal dieResult2, StockProvider animalBaseStock) {
         if (dieResult1.equals(dieResult2)) {
             int howMany1Base = animalBaseStock.getAnimalStock().get(dieResult1);
             int howMany1Farmer = actFarmer.getAnimalStock().get(dieResult1);
@@ -52,7 +52,7 @@ public class DiceRollService {
      * @param actFarmer the farmer(actual player) whose round it is
      * @param oneDieResult result of 1 die
      */
-    private void check1Die(Farmer actFarmer, Animal oneDieResult, StockOrganizer animalBaseStock) {
+    private void check1Die(Farmer actFarmer, Animal oneDieResult, StockProvider animalBaseStock) {
         Animal fox = new Fox();
         Animal smallDog = new SmallDog();
         Animal wolf = new Wolf();
@@ -82,7 +82,7 @@ public class DiceRollService {
      *
      * @param actFarmer the farmer(actual player) whose round it is
      */
-    private void returnAllAnimalsExceptHorsesAndSmallDogs(Farmer actFarmer, StockOrganizer animalBaseStock) {
+    private void returnAllAnimalsExceptHorsesAndSmallDogs(Farmer actFarmer, StockProvider animalBaseStock) {
         Animal horse = new Horse();
         Animal smallDog = new SmallDog();
         for (Animal actAnimal : actFarmer.getAnimalStock().keySet()) {
@@ -102,7 +102,7 @@ public class DiceRollService {
      * @param actFarmer the farmer(actual player) whose round it is
      * @param dieResult result of 1 die
      */
-    private void receiveAnimalsBy1Die(Farmer actFarmer, Animal dieResult, StockOrganizer animalBaseStock) {
+    private void receiveAnimalsBy1Die(Farmer actFarmer, Animal dieResult, StockProvider animalBaseStock) {
         int howManyBase = animalBaseStock.getAnimalStock().get(dieResult);
         int howManyFarmer = actFarmer.getAnimalStock().get(dieResult);
         int actHowMany = Math.min(howManyBase, ((howManyFarmer + 1) / 2));

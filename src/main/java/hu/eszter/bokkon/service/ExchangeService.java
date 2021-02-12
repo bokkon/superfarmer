@@ -2,7 +2,7 @@ package hu.eszter.bokkon.service;
 
 import hu.eszter.bokkon.model.animal.Animal;
 import hu.eszter.bokkon.model.participants.Farmer;
-import hu.eszter.bokkon.model.participants.StockOrganizer;
+import hu.eszter.bokkon.model.participants.StockProvider;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class ExchangeService {
      * @return String value containing whether the exchange took place.
      */
     //TODO refactor so that exchange can be possible between any farmers(players) too
-    public String transactExchange(Farmer actFarmer, StockOrganizer animalBaseStock) {
+    public String transactExchange(Farmer actFarmer, StockProvider animalBaseStock) {
         Map<Animal, Map<Animal, Double>> possExchanges = getPossibleChanges(actFarmer, animalBaseStock.getAnimalStock());
         if (possExchanges.size() == 0) {
             return "There are no possible exchanges for " + actFarmer.getName() + " !";
@@ -64,7 +64,7 @@ public class ExchangeService {
      * @param numberOfSelected the selected exchange to process
      * @return boolean value whether the exchange took place or not
      */
-    private boolean executeExchange(Farmer actFarmer, Map<Animal, Map<Animal, Double>> possibleExchanges, int numberOfSelected, StockOrganizer animalBaseStock) {
+    private boolean executeExchange(Farmer actFarmer, Map<Animal, Map<Animal, Double>> possibleExchanges, int numberOfSelected, StockProvider animalBaseStock) {
         if (numberOfSelected == 0) {
             return false;
         }
