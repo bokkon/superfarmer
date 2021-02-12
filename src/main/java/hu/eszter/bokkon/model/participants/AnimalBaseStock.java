@@ -61,13 +61,4 @@ public class AnimalBaseStock implements StockOrganizer {
         }
 
     }
-
-    public boolean isEmpty() {
-        for (int value: animalStock.values()) {
-            if (value != 0) {
-                return false;
-            }
-        }
-        return true;
-    }
 }
