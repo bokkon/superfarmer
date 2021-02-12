@@ -35,17 +35,19 @@ public class Util {
      *
      * @param possibleChanges is a map data structure storing the possible exchanges between 2 animal stocks
      */
-    public static void printPossibleChangesMap(Map<Animal, Map<Animal, Double>> possibleChanges) {
+    public static void displayPossibleExchanges(Map<Animal, Map<Animal, Double>> possibleChanges) {
         int line = 1;
-        for (Animal exchangeAnimal : possibleChanges.keySet()) {
-            String animalName = exchangeAnimal.getClass().getSimpleName();
-            Map<Animal, Double> actMap = possibleChanges.get(exchangeAnimal);
+        for (Animal actFarmerAnimal : possibleChanges.keySet()) {
+            String animalName = actFarmerAnimal.getClass().getSimpleName();
+            Map<Animal, Double> actMap = possibleChanges.get(actFarmerAnimal);
             for (Animal returnAnimal : actMap.keySet()) {
                 System.out.print(ANSI_BG_PURPLE + ANSI_BRIGHT_BLACK + (line > 9 ? "" : " ") + line++ + ".) ");
                 double count = actMap.get(returnAnimal);
                 if (count >= 1.0) {
+                    boolean lessThanStandard = count < actFarmerAnimal.changeableTo().get(returnAnimal);
                     System.out.println("1 " + animalName + getSpaces(8, animalName.length()) + " ===>   "
-                            + (int) count + " " + returnAnimal.getClass().getSimpleName() + (count == 1 ? "" : "s"));
+                            + (int) count + " " + returnAnimal.getClass().getSimpleName() + (count == 1 ? "" : "s")
+                            + (lessThanStandard ? " (You can only receive last animals available!)" : ""));
                 } else if (count > 0.0) {
                     System.out.println((int) (1 / count) + " " + animalName + ((int) (1 / count) == 1 ? " " : "s")
                             + getSpaces(7, animalName.length())
