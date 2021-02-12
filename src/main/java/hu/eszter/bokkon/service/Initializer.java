@@ -27,4 +27,12 @@ public class Initializer {
     public static Farmer createPlayer(String name) {
         return new Farmer(name);
     }
+
+    public static ExchangeService setUpExchangeService() {
+        return new ExchangeService();
+    }
+
+    public static DiceRollService setUpDiceRollService() {
+        return new DiceRollService();
+    }
 }
