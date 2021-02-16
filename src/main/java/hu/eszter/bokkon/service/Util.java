@@ -38,6 +38,14 @@ public class Util {
     private static final String ANSI_BRIGHT_RED = "\u001B[91m";
     private static final String ANSI_BRIGHT_GREEN = "\u001B[92m";
 
+    public static List<Animal> getAnimalIndecesERates() {
+        return animalIndecesERates;
+    }
+
+    public static double[][] getExchangeRates() {
+        return exchangeRates;
+    }
+
     public static String getReturnColour() {
         return RETURN_COLOUR;
     }

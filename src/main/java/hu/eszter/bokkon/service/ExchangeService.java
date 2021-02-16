@@ -41,7 +41,7 @@ public class ExchangeService {
      * Asks input from the actual player which exchange to process
      *
      * @param actFarmer is the farmer or actual player whose round is
-     * @param maxValue the number of maximum exchange possibilities, therefore the highest number to be able to choose
+     * @param maxValue  the number of maximum exchange possibilities, therefore the highest number to be able to choose
      * @return int value of the chosen exchange
      */
     private int getExchangeSelectionInput(Farmer actFarmer, int minValue, int maxValue) {
@@ -59,9 +59,9 @@ public class ExchangeService {
     /**
      * Executes certain change. What it removes from 1 stock, it adds to the other.
      *
-     * @param actFarmer is the farmer or actual player whose round is
+     * @param actFarmer         is the farmer or actual player whose round is
      * @param possibleExchanges a map containing all exchange possibilities for 1 farmer in 1 round with base stock
-     * @param numberOfSelected the selected exchange to process
+     * @param numberOfSelected  the selected exchange to process
      * @return boolean value whether the exchange took place or not
      */
     private boolean executeExchange(Farmer actFarmer, Map<Animal, Map<Animal, Double>> possibleExchanges, int numberOfSelected, StockProvider animalBaseStock) {
@@ -100,7 +100,6 @@ public class ExchangeService {
      * @param maxValue is the maximum value the input can have after converted into Integer
      * @return whether the input is valid
      */
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean checkInputNumber(String input, int minValue, int maxValue) {
         try {
             int number = Integer.parseInt(input);
@@ -118,7 +117,7 @@ public class ExchangeService {
     /**
      * Calculates exchanges possibilities for 1 farmer(player) with 1 given stock, stores the result in a map.
      *
-     * @param actFarmer actual farmer(player) whose round it is
+     * @param actFarmer              actual farmer(player) whose round it is
      * @param stockToProvideExchange the given stock to be checked for exchanges
      * @return Map containing all possible changes of the actual player with given stock
      */
@@ -127,7 +126,7 @@ public class ExchangeService {
         Map<Animal, Integer> actFarmerStock = actFarmer.getAnimalStock();
         for (Animal actFarmerAnimal : actFarmerStock.keySet()) {
             if (actFarmerStock.get(actFarmerAnimal) >= 1) {
-                Map<Animal, Double> actExchangeTable = actFarmerAnimal.changeableTo();
+                Map<Animal, Double> actExchangeTable = getAllPossibleExchangesForActAnimal(actFarmerAnimal);
                 Map<Animal, Double> revisedExchangeTable = new HashMap<>();
                 for (Animal exchangeAnimal : actExchangeTable.keySet()) {
                     double exchangeRate = actExchangeTable.get(exchangeAnimal);
@@ -145,6 +144,21 @@ public class ExchangeService {
             }
         }
         return actFarmer.getActualPossibleChanges();
+    }
+
+    /**
+     * @param actAnimal the actual animal to be examined
+     * @return the possible exchanges of the given animal
+     */
+    private Map<Animal, Double> getAllPossibleExchangesForActAnimal(Animal actAnimal) {
+        Map<Animal, Double> result = new HashMap<>();
+        int index = Util.getAnimalIndecesERates().indexOf(actAnimal);
+        for (int i = 0; i < 7; i++) {
+            if (Util.getExchangeRates()[index][i] != -1 && index != i) {
+                result.put(Util.getAnimalIndecesERates().get(i), Util.getExchangeRates()[index][i]);
+            }
+        }
+        return result;
     }
 
     /**
