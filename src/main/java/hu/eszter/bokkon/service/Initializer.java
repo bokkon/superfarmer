@@ -6,8 +6,6 @@ import hu.eszter.bokkon.model.participants.Die;
 import hu.eszter.bokkon.model.participants.Farmer;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Initializer {
 
@@ -17,9 +15,13 @@ public class Initializer {
 
     public static Die createDice(Animal a1, Animal a2, Animal a3) {
         List<Animal> diceSides = new ArrayList<>();
-        diceSides.addAll(Stream.generate(Rabbit::new).limit(6).collect(Collectors.toList()));
-        diceSides.addAll(Stream.generate(Sheep::new).limit(2).collect(Collectors.toList()));
-        diceSides.add(new Pig());
+        for (int i = 0; i < 6; i++) {
+            diceSides.add(Animal.RABBIT);
+            if (i < 2) {
+                diceSides.add(Animal.SHEEP);
+            }
+        }
+        diceSides.add(Animal.PIG);
         diceSides.addAll(Arrays.asList(a1, a2, a3));
         return new Die(diceSides);
     }

@@ -17,13 +17,13 @@ public class Farmer implements StockProvider {
     public Farmer(String name) {
         this.name = name;
         this.animalStock = new LinkedHashMap<>();
-        animalStock.put(new Rabbit(), 0);
-        animalStock.put(new Sheep(), 0);
-        animalStock.put(new Pig(), 0);
-        animalStock.put(new Cow(), 0);
-        animalStock.put(new Horse(), 0);
-        animalStock.put(new SmallDog(), 0);
-        animalStock.put(new BigDog(), 0);
+        animalStock.put(Animal.RABBIT, 0);
+        animalStock.put(Animal.SHEEP, 0);
+        animalStock.put(Animal.PIG, 0);
+        animalStock.put(Animal.COW, 0);
+        animalStock.put(Animal.HORSE, 0);
+        animalStock.put(Animal.SMALLDOG, 0);
+        animalStock.put(Animal.BIGDOG, 0);
     }
 
     public String getName() {
@@ -74,11 +74,11 @@ public class Farmer implements StockProvider {
     }
 
     public void setAnimalsCountToZero() {
-        setOneAnimalCountToZero(new Rabbit());
-        setOneAnimalCountToZero(new Sheep());
-        setOneAnimalCountToZero(new Pig());
-        setOneAnimalCountToZero(new Cow());
-        setOneAnimalCountToZero(new BigDog());
+        setOneAnimalCountToZero(Animal.RABBIT);
+        setOneAnimalCountToZero(Animal.SHEEP);
+        setOneAnimalCountToZero(Animal.PIG);
+        setOneAnimalCountToZero(Animal.COW);
+        setOneAnimalCountToZero(Animal.BIGDOG);
 
     }
 

@@ -5,23 +5,21 @@ import hu.eszter.bokkon.model.participants.Die;
 import hu.eszter.bokkon.model.participants.Farmer;
 import hu.eszter.bokkon.model.participants.StockProvider;
 
-import java.util.Map;
-
 public class DiceRollService {
 
     private final Die dice1;
     private final Die dice2;
 
     public DiceRollService() {
-        this.dice1 = Initializer.createDice(new Sheep(), new Cow(), new Wolf());
-        this.dice2 = Initializer.createDice(new Pig(), new Horse(), new Fox());
+        this.dice1 = Initializer.createDice(Animal.SHEEP, Animal.COW, Animal.WOLF);
+        this.dice2 = Initializer.createDice(Animal.PIG, Animal.HORSE, Animal.FOX);
     }
 
     public void transactDiceRoll(Farmer actFarmer, StockProvider animalBaseStock) {
         Animal result1 = actFarmer.rollDice(dice1);
-        printDiceResult(result1);
+        Util.printDiceResult(result1);
         Animal result2 = actFarmer.rollDice(dice2);
-        printDiceResult(result2);
+        Util.printDiceResult(result2);
         evaluateDiceResult(actFarmer, result1, result2, animalBaseStock);
     }
 
@@ -53,26 +51,22 @@ public class DiceRollService {
      * @param oneDieResult result of 1 die
      */
     private void check1Die(Farmer actFarmer, Animal oneDieResult, StockProvider animalBaseStock) {
-        Animal fox = new Fox();
-        Animal smallDog = new SmallDog();
-        Animal wolf = new Wolf();
-        Animal bigDog = new BigDog();
-        Animal rabbit = new Rabbit();
-        if (oneDieResult.equals(fox) && actFarmer.getAnimalStock().get(smallDog) >= 1) {
-            actFarmer.removeAnimals(smallDog, 1);
-            animalBaseStock.addAnimals(smallDog, 1);
+        if (oneDieResult.equals(Animal.FOX) && actFarmer.getAnimalStock().get(Animal.SMALLDOG) >= 1) {
+            actFarmer.removeAnimals(Animal.SMALLDOG, 1);
+            animalBaseStock.addAnimals(Animal.SMALLDOG, 1);
             System.out.println("The fox has come! 1 small dog was taken from " + actFarmer.getName() + "'s stock.");
-        } else if (oneDieResult.equals(fox) && actFarmer.getAnimalStock().get(smallDog) == 0 && actFarmer.getAnimalStock().get(rabbit) >= 1) {
-            animalBaseStock.addAnimals(rabbit, actFarmer.getAnimalStock().get(rabbit));
-            actFarmer.setOneAnimalCountToZero(rabbit);
+        } else if (oneDieResult.equals(Animal.FOX) && actFarmer.getAnimalStock().get(Animal.SMALLDOG) == 0
+                && actFarmer.getAnimalStock().get(Animal.RABBIT) >= 1) {
+            animalBaseStock.addAnimals(Animal.RABBIT, actFarmer.getAnimalStock().get(Animal.RABBIT));
+            actFarmer.setOneAnimalCountToZero(Animal.RABBIT);
             System.out.println("The fox has come! All rabbits were taken from " + actFarmer.getName() + "'s stock.");
-        } else if (oneDieResult.equals(wolf) && actFarmer.getAnimalStock().get(bigDog) >= 1) {
-            actFarmer.removeAnimals(bigDog, 1);
-            animalBaseStock.addAnimals(bigDog, 1);
+        } else if (oneDieResult.equals(Animal.WOLF) && actFarmer.getAnimalStock().get(Animal.BIGDOG) >= 1) {
+            actFarmer.removeAnimals(Animal.BIGDOG, 1);
+            animalBaseStock.addAnimals(Animal.BIGDOG, 1);
             System.out.println("The wolf has come! 1 big dog was taken from " + actFarmer.getName() + "'s stock.");
-        } else if (oneDieResult.equals(wolf) && actFarmer.getAnimalStock().get(bigDog) == 0) {
+        } else if (oneDieResult.equals(Animal.WOLF) && actFarmer.getAnimalStock().get(Animal.BIGDOG) == 0) {
             returnAllAnimalsExceptHorsesAndSmallDogs(actFarmer, animalBaseStock);
-        } else if (!oneDieResult.equals(fox) && !oneDieResult.equals(wolf)) {
+        } else if (oneDieResult.getAnimalType() != AnimalType.ATTACKER) {
             receiveAnimalsBy1Die(actFarmer, oneDieResult, animalBaseStock);
         }
     }
@@ -83,10 +77,8 @@ public class DiceRollService {
      * @param actFarmer the farmer(actual player) whose round it is
      */
     private void returnAllAnimalsExceptHorsesAndSmallDogs(Farmer actFarmer, StockProvider animalBaseStock) {
-        Animal horse = new Horse();
-        Animal smallDog = new SmallDog();
         for (Animal actAnimal : actFarmer.getAnimalStock().keySet()) {
-            if (!actAnimal.equals(horse) || !actAnimal.equals(smallDog)) {
+            if (!actAnimal.equals(Animal.HORSE) && !actAnimal.equals(Animal.SMALLDOG)) {
                 if ( actFarmer.getAnimalStock().get(actAnimal) != 0 ) {
                     animalBaseStock.addAnimals(actAnimal, actFarmer.getAnimalStock().get(actAnimal));
                 }
@@ -110,24 +102,7 @@ public class DiceRollService {
             actFarmer.addAnimals(dieResult, actHowMany);
             animalBaseStock.removeAnimals(dieResult, actHowMany);
         }
-        System.out.println(actFarmer.getName() + " received " + actHowMany + " " + dieResult.getClass().getSimpleName() + (actHowMany == 0 || actHowMany > 1 ? "s" : "") + " from the base stock.");
+        System.out.println(actFarmer.getName() + " received " + actHowMany + " " + dieResult.toString().toLowerCase() + (actHowMany == 0 || actHowMany > 1 ? "s" : "") + " from the base stock.");
     }
 
-    /**
-     * Checks if the actual farmer(player) whose round it is, whether or no has 5 different type of animals
-     * which are not dogs.
-     *
-     * @param actFarmer is the farmer(player) whose round it is
-     * @return integer value how many animal types the farmer has except for dogs
-     */
-    private boolean checkWin(Farmer actFarmer) {
-        Map<Animal, Integer> farmerAnimals = actFarmer.getAnimalStock();
-        int animalCounter = (int) farmerAnimals.keySet().stream()
-                .filter(key -> !key.equals(new SmallDog()) && !key.equals(new BigDog()) && farmerAnimals.get(key) >= 1).count();
-        return animalCounter == 5;
-    }
-
-    private void printDiceResult(Animal result) {
-        System.out.println("The result of the dice rolled is:  " + result.getClass().getSimpleName());
-    }
 }

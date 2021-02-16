@@ -13,13 +13,13 @@ public class AnimalBaseStock implements StockProvider {
     private Map<Animal, Integer> animalStock = new LinkedHashMap<>();
 
     public AnimalBaseStock() {
-        animalStock.put(new Rabbit(), 60);
-        animalStock.put(new Sheep(), 24);
-        animalStock.put(new Pig(), 20);
-        animalStock.put(new Cow(), 12);
-        animalStock.put(new Horse(), 6);
-        animalStock.put(new SmallDog(), 4);
-        animalStock.put(new BigDog(), 2);
+        animalStock.put(Animal.RABBIT, 60);
+        animalStock.put(Animal.SHEEP, 24);
+        animalStock.put(Animal.PIG, 20);
+        animalStock.put(Animal.COW, 12);
+        animalStock.put(Animal.HORSE, 6);
+        animalStock.put(Animal.SMALLDOG, 4);
+        animalStock.put(Animal.BIGDOG, 2);
     }
 
     @Override

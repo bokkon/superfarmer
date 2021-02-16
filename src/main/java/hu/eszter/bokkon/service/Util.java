@@ -11,8 +11,8 @@ public class Util {
      * a list containing Animals is to be used as both horizontal and vertical indeces for the exchangeRates matrix,
      * therefore their order is important
      */
-    private static final List<Animal> animalIndecesERates = new ArrayList<>(Arrays.asList(new Rabbit(),
-            new Sheep(), new Pig(), new Cow(), new Horse(), new SmallDog(), new BigDog()));
+    private static final List<Animal> animalIndecesERates = new ArrayList<>(Arrays.asList(Animal.RABBIT,
+            Animal.SHEEP, Animal.PIG, Animal.COW, Animal.HORSE, Animal.SMALLDOG, Animal.BIGDOG));
 
     /**
      * the 2D array provides the exchange rates for exchanging the animals in the game, the matrix can be used together
@@ -66,24 +66,30 @@ public class Util {
     public static void displayPossibleExchanges(Map<Animal, Map<Animal, Double>> possibleChanges) {
         int line = 1;
         for (Animal actFarmerAnimal : possibleChanges.keySet()) {
-            String animalName = actFarmerAnimal.getClass().getSimpleName();
+            String animalName = actFarmerAnimal.toString().toLowerCase();
             Map<Animal, Double> actMap = possibleChanges.get(actFarmerAnimal);
             for (Animal returnAnimal : actMap.keySet()) {
                 System.out.print(ANSI_BG_PURPLE + ANSI_BRIGHT_BLACK + (line > 9 ? "" : " ") + line++ + ".) ");
                 double count = actMap.get(returnAnimal);
                 if (count >= 1.0) {
-                    boolean lessThanStandard = count < actFarmerAnimal.changeableTo().get(returnAnimal);
+                    boolean lessThanStandard = count < getExhangeRate(actFarmerAnimal, returnAnimal);
                     System.out.println("1 " + animalName + getSpaces(8, animalName.length()) + " ===>   "
-                            + (int) count + " " + returnAnimal.getClass().getSimpleName() + (count == 1 ? "" : "s")
+                            + (int) count + " " + returnAnimal.toString().toLowerCase() + (count == 1 ? "" : "s")
                             + (lessThanStandard ? " (You can only receive last animals available!)" : ""));
                 } else if (count > 0.0) {
                     System.out.println((int) (1 / count) + " " + animalName + ((int) (1 / count) == 1 ? " " : "s")
                             + getSpaces(7, animalName.length())
-                            + " ===>   1 " + returnAnimal.getClass().getSimpleName());
+                            + " ===>   1 " + returnAnimal.toString().toLowerCase());
                 }
             }
         }
         System.out.println(RETURN_COLOUR);
+    }
+
+    private static double getExhangeRate(Animal actFarmerAnimal, Animal returnAnimal) {
+        int indexX = Util.getAnimalIndecesERates().indexOf(actFarmerAnimal);
+        int indexY = Util.getAnimalIndecesERates().indexOf(returnAnimal);
+        return Util.getExchangeRates()[indexX][indexY];
     }
 
     /**
@@ -96,7 +102,7 @@ public class Util {
         System.out.println();
         System.out.println(String.join("", Collections.nCopies(24 * (allFarmers.size() + 1) - 10, "-")));
         for (Animal actAnimal : baseStock.keySet()) {
-            String actName = actAnimal.getClass().getSimpleName();
+            String actName = actAnimal.toString().toLowerCase();
             int count = baseStock.get(actAnimal);
             printEntrySet(actName, count);
             for (int i = 0; i < allFarmers.size(); i++) {
@@ -119,6 +125,10 @@ public class Util {
 
     private static String getSpaces(int maxLength, int wordLength) {
         return String.join("", Collections.nCopies(maxLength - wordLength, " "));
+    }
+
+    public static void printDiceResult(Animal result) {
+        System.out.println("The result of the dice rolled is:  " + result.toString().toLowerCase());
     }
 
     public static void startMessage() {

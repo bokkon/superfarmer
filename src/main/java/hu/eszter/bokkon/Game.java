@@ -118,7 +118,6 @@ public class Game {
         System.out.println();
     }
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean checkInputNumber(String input, int minValue, int maxValue) {
         try {
             int number = Integer.parseInt(input);
@@ -143,7 +142,7 @@ public class Game {
     private boolean checkWin(Farmer actFarmer) {
         Map<Animal, Integer> farmerAnimals = actFarmer.getAnimalStock();
         int animalCounter = (int) farmerAnimals.keySet().stream()
-                .filter(key -> !key.equals(new SmallDog()) && !key.equals(new BigDog()) && farmerAnimals.get(key) >= 1).count();
+                .filter(key -> !key.equals(Animal.SMALLDOG) && !key.equals(Animal.BIGDOG) && farmerAnimals.get(key) >= 1).count();
         return animalCounter == 5;
     }
 
