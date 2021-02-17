@@ -26,8 +26,7 @@ public class ExchangeService {
         if (possExchanges.size() == 0) {
             return "There are no possible exchanges for " + actFarmer.getName() + " !";
         }
-        System.out.println("Possible changes for " + actFarmer.getName() + ":\n");
-        Util.displayPossibleExchanges(possExchanges);
+        Util.displayPossibleExchanges(actFarmer, possExchanges);
         int countPossibilities = possExchanges.values().stream().mapToInt(Map::size).sum();
         int selectedExchange = getExchangeSelectionInput(actFarmer, 0, countPossibilities);
         return executeExchange(actFarmer, possExchanges, selectedExchange, animalBaseStock) ?

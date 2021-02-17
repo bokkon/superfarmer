@@ -52,7 +52,8 @@ public class Util {
      *
      * @param possibleChanges is a map data structure storing the possible exchanges between 2 animal stocks
      */
-    public static void displayPossibleExchanges(Map<Animal, Map<Animal, Double>> possibleChanges) {
+    public static void displayPossibleExchanges(Farmer actFarmer, Map<Animal, Map<Animal, Double>> possibleChanges) {
+        System.out.println("Possible changes for " + actFarmer.getName() + ":\n");
         int line = 1;
         for (Animal actFarmerAnimal : possibleChanges.keySet()) {
             Map<Animal, Double> actMap = possibleChanges.get(actFarmerAnimal);
