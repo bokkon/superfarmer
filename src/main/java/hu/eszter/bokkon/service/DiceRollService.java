@@ -7,18 +7,18 @@ import hu.eszter.bokkon.model.participants.StockProvider;
 
 public class DiceRollService {
 
-    private final Die dice1;
-    private final Die dice2;
+    private final Die die1;
+    private final Die die2;
 
-    public DiceRollService() {
-        this.dice1 = Initializer.createDice(Animal.SHEEP, Animal.COW, Animal.WOLF);
-        this.dice2 = Initializer.createDice(Animal.PIG, Animal.HORSE, Animal.FOX);
+    public DiceRollService(Die die1, Die die2) {
+        this.die1 = die1;
+        this.die2 = die2;
     }
 
     public void transactDiceRoll(Farmer actFarmer, StockProvider animalBaseStock) {
-        Animal result1 = actFarmer.rollDice(dice1);
+        Animal result1 = actFarmer.rollDice(die1);
         Util.printDiceResult(result1);
-        Animal result2 = actFarmer.rollDice(dice2);
+        Animal result2 = actFarmer.rollDice(die2);
         Util.printDiceResult(result2);
         evaluateDiceResult(actFarmer, result1, result2, animalBaseStock);
     }

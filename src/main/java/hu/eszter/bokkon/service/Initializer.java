@@ -13,19 +13,6 @@ public class Initializer {
         return new AnimalBaseStock();
     }
 
-    public static Die createDice(Animal a1, Animal a2, Animal a3) {
-        List<Animal> diceSides = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            diceSides.add(Animal.RABBIT);
-            if (i < 2) {
-                diceSides.add(Animal.SHEEP);
-            }
-        }
-        diceSides.add(Animal.PIG);
-        diceSides.addAll(Arrays.asList(a1, a2, a3));
-        return new Die(diceSides);
-    }
-
     public static Farmer createPlayer(String name) {
         return new Farmer(name);
     }
@@ -35,6 +22,16 @@ public class Initializer {
     }
 
     public static DiceRollService setUpDiceRollService() {
-        return new DiceRollService();
+        Die die1 = createDice(Animal.SHEEP, Animal.COW, Animal.WOLF);
+        Die die2 = createDice(Animal.PIG, Animal.HORSE, Animal.FOX);
+        return new DiceRollService(die1, die2);
+    }
+
+    private static Die createDice(Animal a1, Animal a2, Animal a3) {
+        List<Animal> diceSides = new ArrayList<>(Collections.nCopies(6, Animal.RABBIT));
+        diceSides.addAll(Collections.nCopies(2, Animal.SHEEP));
+        diceSides.add(Animal.PIG);
+        diceSides.addAll(Arrays.asList(a1, a2, a3));
+        return new Die(diceSides);
     }
 }
