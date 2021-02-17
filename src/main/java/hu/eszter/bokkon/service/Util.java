@@ -7,19 +7,6 @@ import java.util.*;
 
 public class Util {
 
-    /**
-     * the 2D array provides the exchange rates for exchanging the animals in the game, the matrix can be used together
-     * with the animalIndecesERates Arraylist
-     */
-    private static final double[][] exchangeRates = {
-            {  1, 1.0/6,    -1,    -1,    -1,  -1,  -1},
-            {  6,     1, 1.0/2,    -1,    -1,   1,  -1},
-            { -1,     2,     1, 1.0/3,    -1,  -1,  -1},
-            { -1,    -1,     3,     1, 1.0/2,  -1,   1},
-            { -1,    -1,    -1,     2,     1,  -1,  -1},
-            { -1,     1,    -1,    -1,    -1,   1,  -1},
-            { -1,    -1,    -1,     1,    -1,  -1,   1}};
-
     private static final String ANSI_BRIGHT_BLUE = "\u001B[94m";
     private static final String ANSI_BLUE = "\u001B[34m";
     private static final String ANSI_CYAN = "\u001B[36m";
@@ -30,6 +17,25 @@ public class Util {
     private static final String ANSI_BRIGHT_BLACK = "\u001B[97m";
     private static final String ANSI_BRIGHT_RED = "\u001B[91m";
     private static final String ANSI_BRIGHT_GREEN = "\u001B[92m";
+
+    /**
+     * the 2D array provides the exchange rates for the 7 type of exchang animals in the game, the matrix can be used together
+     * with the animalIndecesERates Arraylist
+     */
+    private static double[][] exchangeRates = new double[7][7];
+
+    public static void initializeExchangeRatesBase() {
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
+                exchangeRates[i][j] = i == j ? 1 : -1;
+            }
+        }
+    }
+
+    public static void registerExchangeRate(Animal a1, Animal a2, int rate) {
+        exchangeRates[a1.ordinal()][a2.ordinal()] = rate;
+        exchangeRates[a2.ordinal()][a1.ordinal()] = 1.0 / rate;
+    }
 
     public static double[][] getExchangeRates() {
         return exchangeRates;
@@ -53,7 +59,7 @@ public class Util {
      * @param possibleChanges is a map data structure storing the possible exchanges between 2 animal stocks
      */
     public static void displayPossibleExchanges(Farmer actFarmer, Map<Animal, Map<Animal, Double>> possibleChanges) {
-        System.out.println("Possible changes for " + actFarmer.getName() + ":\n");
+        System.out.println("Possible changes for " + actFarmer.getName() + ":");
         int line = 1;
         for (Animal actFarmerAnimal : possibleChanges.keySet()) {
             Map<Animal, Double> actMap = possibleChanges.get(actFarmerAnimal);

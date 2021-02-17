@@ -9,6 +9,16 @@ import java.util.*;
 
 public class Initializer {
 
+    public static void setUpExchangeRateTable() {
+        Util.initializeExchangeRatesBase();
+        Util.registerExchangeRate(Animal.SHEEP, Animal.RABBIT, 6);
+        Util.registerExchangeRate(Animal.PIG, Animal.SHEEP, 2);
+        Util.registerExchangeRate(Animal.COW, Animal.PIG, 3);
+        Util.registerExchangeRate(Animal.HORSE, Animal.COW, 2);
+        Util.registerExchangeRate(Animal.SMALLDOG, Animal.SHEEP, 1);
+        Util.registerExchangeRate(Animal.BIGDOG, Animal.COW, 1);
+    }
+
     public static AnimalBaseStock createAnimalStock() {
         return new AnimalBaseStock();
     }
