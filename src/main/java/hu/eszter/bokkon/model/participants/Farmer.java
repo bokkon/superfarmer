@@ -2,6 +2,7 @@ package hu.eszter.bokkon.model.participants;
 
 import hu.eszter.bokkon.model.animal.*;
 
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public class Farmer implements StockProvider {
 
     public Farmer(String name) {
         this.name = name;
-        this.animalStock = new LinkedHashMap<>();
+        this.animalStock = new EnumMap<>(Animal.class);
         animalStock.put(Animal.RABBIT, 0);
         animalStock.put(Animal.SHEEP, 0);
         animalStock.put(Animal.PIG, 0);
