@@ -8,13 +8,6 @@ import java.util.*;
 public class Util {
 
     /**
-     * a list containing Animals is to be used as both horizontal and vertical indeces for the exchangeRates matrix,
-     * therefore their order is important
-     */
-    private static final List<Animal> animalIndecesERates = new ArrayList<>(Arrays.asList(Animal.RABBIT,
-            Animal.SHEEP, Animal.PIG, Animal.COW, Animal.HORSE, Animal.SMALLDOG, Animal.BIGDOG));
-
-    /**
      * the 2D array provides the exchange rates for exchanging the animals in the game, the matrix can be used together
      * with the animalIndecesERates Arraylist
      */
@@ -37,10 +30,6 @@ public class Util {
     private static final String ANSI_BRIGHT_BLACK = "\u001B[97m";
     private static final String ANSI_BRIGHT_RED = "\u001B[91m";
     private static final String ANSI_BRIGHT_GREEN = "\u001B[92m";
-
-    public static List<Animal> getAnimalIndecesERates() {
-        return animalIndecesERates;
-    }
 
     public static double[][] getExchangeRates() {
         return exchangeRates;
@@ -87,8 +76,8 @@ public class Util {
     }
 
     private static double getExhangeRate(Animal actFarmerAnimal, Animal returnAnimal) {
-        int indexX = Util.getAnimalIndecesERates().indexOf(actFarmerAnimal);
-        int indexY = Util.getAnimalIndecesERates().indexOf(returnAnimal);
+        int indexX = actFarmerAnimal.ordinal();
+        int indexY = returnAnimal.ordinal();
         return Util.getExchangeRates()[indexX][indexY];
     }
 

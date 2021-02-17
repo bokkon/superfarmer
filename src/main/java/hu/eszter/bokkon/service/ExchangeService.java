@@ -4,9 +4,7 @@ import hu.eszter.bokkon.model.animal.Animal;
 import hu.eszter.bokkon.model.participants.Farmer;
 import hu.eszter.bokkon.model.participants.StockProvider;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class ExchangeService {
 
@@ -136,9 +134,10 @@ public class ExchangeService {
                     }
                     //if there are fewer animals in the base stock to provide according to the exchange rates, but there still are
                     if (!available && stockToProvideExchange.get(exchangeAnimal) >= 1) {
-                        revisedExchangeTable.put(exchangeAnimal, (double)stockToProvideExchange.get(exchangeAnimal));
+                        revisedExchangeTable.put(exchangeAnimal, (double) stockToProvideExchange.get(exchangeAnimal));
                     }
-                } if (!revisedExchangeTable.isEmpty()) {
+                }
+                if (!revisedExchangeTable.isEmpty()) {
                     actFarmer.setActualPossibleChanges(actFarmerAnimal, revisedExchangeTable);
                 }
             }
@@ -152,10 +151,10 @@ public class ExchangeService {
      */
     private Map<Animal, Double> getAllPossibleExchangesForActAnimal(Animal actAnimal) {
         Map<Animal, Double> result = new HashMap<>();
-        int index = Util.getAnimalIndecesERates().indexOf(actAnimal);
+        int index = actAnimal.ordinal();
         for (int i = 0; i < 7; i++) {
             if (Util.getExchangeRates()[index][i] != -1 && index != i) {
-                result.put(Util.getAnimalIndecesERates().get(i), Util.getExchangeRates()[index][i]);
+                result.put(Animal.values()[i], Util.getExchangeRates()[index][i]);
             }
         }
         return result;
