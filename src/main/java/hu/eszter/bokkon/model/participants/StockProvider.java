@@ -4,7 +4,7 @@ import hu.eszter.bokkon.model.animal.Animal;
 
 import java.util.Map;
 
-public interface StockOrganizer {
+public interface StockProvider {
 
     /**
      * Adds given number of the same type of animal to an animal stock

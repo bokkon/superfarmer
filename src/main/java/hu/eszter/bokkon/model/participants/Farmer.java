@@ -2,13 +2,14 @@ package hu.eszter.bokkon.model.participants;
 
 import hu.eszter.bokkon.model.animal.*;
 
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
  * Farmer is the player, who can collect animals. 2-4 players can play in 1 game.
  */
-public class Farmer implements StockOrganizer {
+public class Farmer implements StockProvider {
 
     private final String name;
     private Map<Animal, Integer> animalStock;
@@ -16,14 +17,14 @@ public class Farmer implements StockOrganizer {
 
     public Farmer(String name) {
         this.name = name;
-        this.animalStock = new LinkedHashMap<>();
-        animalStock.put(new Rabbit(), 0);
-        animalStock.put(new Sheep(), 0);
-        animalStock.put(new Pig(), 0);
-        animalStock.put(new Cow(), 0);
-        animalStock.put(new Horse(), 0);
-        animalStock.put(new SmallDog(), 0);
-        animalStock.put(new BigDog(), 0);
+        this.animalStock = new EnumMap<>(Animal.class);
+        animalStock.put(Animal.RABBIT, 0);
+        animalStock.put(Animal.SHEEP, 0);
+        animalStock.put(Animal.PIG, 0);
+        animalStock.put(Animal.COW, 0);
+        animalStock.put(Animal.HORSE, 0);
+        animalStock.put(Animal.SMALLDOG, 0);
+        animalStock.put(Animal.BIGDOG, 0);
     }
 
     public String getName() {
@@ -36,7 +37,7 @@ public class Farmer implements StockOrganizer {
     }
 
     /**
-     * Implementation of addAnimals method of StockOrganizer interface. Adds given number of the same type of animal to
+     * Implementation of addAnimals method of StockProvider interface. Adds given number of the same type of animal to
      * the animal stock of the farmer(player), which is an empty map by default. If the the stock doesn't contain the
      * type of animal yet, it adds it to the stock.
      *
@@ -53,7 +54,7 @@ public class Farmer implements StockOrganizer {
     }
 
     /**
-     * Implementation of removeAnimals method of StockOrganizer interface. Removes given number of the same type of animal
+     * Implementation of removeAnimals method of StockProvider interface. Removes given number of the same type of animal
      * from the animal stock of the farmer(player) if there are available number of animals in the stock, which is an
      * empty map by default. In case the number of animals becomes 0, it removes the tape of animal from the stock.
      *
@@ -74,11 +75,11 @@ public class Farmer implements StockOrganizer {
     }
 
     public void setAnimalsCountToZero() {
-        setOneAnimalCountToZero(new Rabbit());
-        setOneAnimalCountToZero(new Sheep());
-        setOneAnimalCountToZero(new Pig());
-        setOneAnimalCountToZero(new Cow());
-        setOneAnimalCountToZero(new BigDog());
+        setOneAnimalCountToZero(Animal.RABBIT);
+        setOneAnimalCountToZero(Animal.SHEEP);
+        setOneAnimalCountToZero(Animal.PIG);
+        setOneAnimalCountToZero(Animal.COW);
+        setOneAnimalCountToZero(Animal.BIGDOG);
 
     }
 

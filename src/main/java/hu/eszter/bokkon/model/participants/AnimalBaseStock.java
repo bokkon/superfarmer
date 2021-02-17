@@ -2,24 +2,24 @@ package hu.eszter.bokkon.model.participants;
 
 import hu.eszter.bokkon.model.animal.*;
 
-import java.util.LinkedHashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 /**
  * Base Stock providing all farm animals for 1 game.
  */
-public class AnimalBaseStock implements StockOrganizer {
+public class AnimalBaseStock implements StockProvider {
 
-    private Map<Animal, Integer> animalStock = new LinkedHashMap<>();
+    private Map<Animal, Integer> animalStock = new EnumMap<>(Animal.class);
 
     public AnimalBaseStock() {
-        animalStock.put(new Rabbit(), 60);
-        animalStock.put(new Sheep(), 24);
-        animalStock.put(new Pig(), 20);
-        animalStock.put(new Cow(), 12);
-        animalStock.put(new Horse(), 6);
-        animalStock.put(new SmallDog(), 4);
-        animalStock.put(new BigDog(), 2);
+        animalStock.put(Animal.RABBIT, 60);
+        animalStock.put(Animal.SHEEP, 24);
+        animalStock.put(Animal.PIG, 20);
+        animalStock.put(Animal.COW, 12);
+        animalStock.put(Animal.HORSE, 6);
+        animalStock.put(Animal.SMALLDOG, 4);
+        animalStock.put(Animal.BIGDOG, 2);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class AnimalBaseStock implements StockOrganizer {
     }
 
     /**
-     * Implementation of addAnimals method of StockOrganizer interface. Adds given number of the same type of animal to
+     * Implementation of addAnimals method of StockProvider interface. Adds given number of the same type of animal to
      * the base animal stock, which is a map containing animal types as key and the number of that type of
      * animal as value, which is 0 by default.
      *
@@ -45,7 +45,7 @@ public class AnimalBaseStock implements StockOrganizer {
     }
 
     /**
-     * Implementation of removeAnimals method of StockOrganizer interface. Removes given number of the same type of animal
+     * Implementation of removeAnimals method of StockProvider interface. Removes given number of the same type of animal
      * from the base animal stock if there are available number of animals. In case there are no available animals from
      * 1 type, the animal type as key remains and its value becomes 0.
      *
@@ -60,14 +60,5 @@ public class AnimalBaseStock implements StockOrganizer {
             System.out.println("No animal was removed from the base stock.");
         }
 
-    }
-
-    public boolean isEmpty() {
-        for (int value: animalStock.values()) {
-            if (value != 0) {
-                return false;
-            }
-        }
-        return true;
     }
 }
