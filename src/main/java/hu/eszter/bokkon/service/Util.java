@@ -66,20 +66,20 @@ public class Util {
     public static void displayPossibleExchanges(Map<Animal, Map<Animal, Double>> possibleChanges) {
         int line = 1;
         for (Animal actFarmerAnimal : possibleChanges.keySet()) {
-            String animalName = actFarmerAnimal.toString().toLowerCase();
             Map<Animal, Double> actMap = possibleChanges.get(actFarmerAnimal);
             for (Animal returnAnimal : actMap.keySet()) {
                 System.out.print(ANSI_BG_PURPLE + ANSI_BRIGHT_BLACK + (line > 9 ? "" : " ") + line++ + ".) ");
                 double count = actMap.get(returnAnimal);
                 if (count >= 1.0) {
                     boolean lessThanStandard = count < getExhangeRate(actFarmerAnimal, returnAnimal);
-                    System.out.println("1 " + animalName + getSpaces(8, animalName.length()) + " ===>   "
-                            + (int) count + " " + returnAnimal.toString().toLowerCase() + (count == 1 ? "" : "s")
+                    System.out.println("1 " + displayName(actFarmerAnimal)
+                            + getSpaces(8, displayName(actFarmerAnimal).length()) + " ===>   "
+                            + (int) count + " " + displayName(returnAnimal) + (count == 1 ? "" : "s")
                             + (lessThanStandard ? " (You can only receive last animals available!)" : ""));
                 } else if (count > 0.0) {
-                    System.out.println((int) (1 / count) + " " + animalName + ((int) (1 / count) == 1 ? " " : "s")
-                            + getSpaces(7, animalName.length())
-                            + " ===>   1 " + returnAnimal.toString().toLowerCase());
+                    System.out.println((int) (1 / count) + " " + displayName(actFarmerAnimal) + ((int) (1 / count) == 1 ? " " : "s")
+                            + getSpaces(7, displayName(actFarmerAnimal).length())
+                            + " ===>   1 " + displayName(returnAnimal));
                 }
             }
         }
@@ -102,12 +102,11 @@ public class Util {
         System.out.println();
         System.out.println(String.join("", Collections.nCopies(24 * (allFarmers.size() + 1) - 10, "-")));
         for (Animal actAnimal : baseStock.keySet()) {
-            String actName = actAnimal.toString().toLowerCase();
             int count = baseStock.get(actAnimal);
-            printEntrySet(actName, count);
+            printEntrySet(displayName(actAnimal), count);
             for (int i = 0; i < allFarmers.size(); i++) {
                 Map<Animal, Integer> actMap = allFarmers.get(i).getAnimalStock();
-                printEntrySet(actName, (actMap.get(actAnimal) == null ? 0 : actMap.get(actAnimal)));
+                printEntrySet(displayName(actAnimal), (actMap.get(actAnimal) == null ? 0 : actMap.get(actAnimal)));
                 if (i == allFarmers.size() - 1) {
                     System.out.println();
                 }
@@ -115,6 +114,10 @@ public class Util {
         }
         System.out.println();
         System.out.println(RETURN_COLOUR);
+    }
+
+    private static String displayName(Animal animal) {
+        return animal.toString().toLowerCase();
     }
 
     private static void printEntrySet(String name, int count) {
